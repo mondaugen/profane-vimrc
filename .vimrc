@@ -29,11 +29,11 @@ set textwidth=80
 set number
 
 " Set tab width to 4
-set ts=4
+set ts=2
 " Insert spaces when tab key pressed
 set expandtab
 set smarttab
-set shiftwidth=4
+set shiftwidth=2
 
 "edit vimrc
 map ,ev :tabe $MYVIMRC
