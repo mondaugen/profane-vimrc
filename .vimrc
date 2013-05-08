@@ -36,7 +36,7 @@ set smarttab
 set shiftwidth=2
 
 "edit vimrc
-map ,ev :tabe $MYVIMRC
+map ,ev :tabe $MYVIMRC<CR>
 
 "system header tags
 set tags+=~/.vim/systags
@@ -60,6 +60,13 @@ map ,d :s/^\([/(]\*\\|<!--\) \(.*\) \(\*[/)]\\|-->\)$/\2/<CR> <Esc>:nohlsearch<C
 
 " quick nohighlighted search
 map ,nh <Esc>:nohlsearch<CR>
+
+" underline text
+nnoremap ,ul yyp<c-v>$r-
+nnoremap ,UL yyp<c-v>$r-
+
+" spell checking
+map ,sp <Esc>:setlocal spell spelllang=en_us<CR>
 
 """"""" C STUFF """""""
 
