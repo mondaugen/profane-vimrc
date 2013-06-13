@@ -216,3 +216,10 @@ if !exists(":DiffOrig")
   command DiffOrig vert new | set bt=nofile | r # | 0d_ | diffthis
 		  \ | wincmd p | diffthis
 endif
+
+function! s:insert_html_skeleton()
+  execute "normal! i<!DOCTYPE html>\n<html>\n<head>\n<meta http-equiv='Content-Type' "
+  execute "normal! i content='text/html:charset=utf-8' />\n</head>\n<body>\n</body>\n</html>"
+  execute "normal! gg=G"
+endfunction
+autocmd BufNewFile *.{htm,html} call <SID>insert_html_skeleton()
