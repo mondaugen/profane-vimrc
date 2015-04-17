@@ -228,3 +228,5 @@ function! s:insert_html_skeleton()
   execute "normal! gg=G"
 endfunction
 autocmd BufNewFile *.{htm,html} call <SID>insert_html_skeleton()
+
+se guifont=Monospace\ 8
