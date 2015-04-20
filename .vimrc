@@ -230,3 +230,5 @@ endfunction
 autocmd BufNewFile *.{htm,html} call <SID>insert_html_skeleton()
 
 se guifont=Monospace\ 8
+
+se columns=84
