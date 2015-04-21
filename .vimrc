@@ -32,11 +32,11 @@ set textwidth=80
 set number
 
 " Set tab width to 4
-set ts=2
+set ts=4
 " Insert spaces when tab key pressed
 set expandtab
 set smarttab
-set shiftwidth=2
+set shiftwidth=4
 
 "edit vimrc
 map ,ev :tabe $MYVIMRC<CR>
@@ -223,3 +223,10 @@ function! s:insert_html_skeleton()
   execute "normal! gg=G"
 endfunction
 autocmd BufNewFile *.{htm,html} call <SID>insert_html_skeleton()
+
+" Set font
+se guifont=Monospace\ 8.5
+
+" Set line breaking
+se wrap
+se lbr
