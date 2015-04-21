@@ -188,8 +188,13 @@ if has("autocmd")
   augroup vimrcEx
   au!
 
-  " For all text files set 'textwidth' to 78 characters.
-  autocmd FileType text setlocal textwidth=78
+  " For all text files wrap lines based on size of window
+  autocmd FileType text setlocal textwidth=0
+  autocmd FileType text setlocal wrapmargin=0
+  autocmd FileType text setlocal wrap
+  autocmd FileType text setlocal linebreak
+  autocmd FileType text setlocal nolist
+  
 
   " When editing a file, always jump to the last known cursor position.
   " Don't do it when the position is invalid or when inside an event handler
