@@ -228,3 +228,14 @@ function! s:insert_html_skeleton()
   execute "normal! gg=G"
 endfunction
 autocmd BufNewFile *.{htm,html} call <SID>insert_html_skeleton()
+
+" Toggle relative number
+function! RNU_toggle()
+    if(&relativenumber == 1)
+        se nornu
+    else
+        se rnu
+    endif
+endfun
+
+map ,rn :call RNU_toggle()<CR>
