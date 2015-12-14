@@ -230,8 +230,11 @@ endfunction
 autocmd BufNewFile *.{htm,html} call <SID>insert_html_skeleton()
 
 " Set font
-se guifont=Monospace\ 8.5
+se guifont=Menlo\ 9 
 
 " Set line breaking
 se wrap
 se lbr
+
+" Set colour scheme, budday
+colo darkblue
