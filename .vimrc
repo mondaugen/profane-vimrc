@@ -239,3 +239,12 @@ function! RNU_toggle()
 endfun
 
 map ,rn :call RNU_toggle()<CR>
+" Set font
+se guifont=Menlo\ 9 
+
+" Set line breaking
+se wrap
+se lbr
+
+" Set colour scheme, budday
+colo darkblue
