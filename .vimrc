@@ -240,7 +240,7 @@ endfun
 
 map ,rn :call RNU_toggle()<CR>
 " Set font
-se guifont=Menlo\ 9 
+se guifont=Menlo\ 10
 
 " Set line breaking
 se wrap
@@ -248,3 +248,8 @@ se lbr
 
 " Set colour scheme, budday
 colo darkblue
+
+" Map CTRL-S to :w
+map  :w
+" Map CTRL-N to :
+map  :
