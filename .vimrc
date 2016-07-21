@@ -240,7 +240,7 @@ endfun
 
 map ,rn :call RNU_toggle()<CR>
 " Set font
-se guifont=Menlo\ 10
+"se guifont=Menlo\ 10
 
 " Set line breaking
 se wrap
