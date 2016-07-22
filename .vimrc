@@ -247,9 +247,12 @@ se wrap
 se lbr
 
 " Set colour scheme, budday
-colo darkblue
+colo koehler
 
 " Map CTRL-S to :w
 map  :w
 " Map CTRL-N to :
 map  :
+
+" Source site vimrc
+so $HOME/.vimrc_local
