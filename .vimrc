@@ -253,3 +253,6 @@ colo koehler
 map  :w
 " Map CTRL-N to :
 map  :
+
+" Source site vimrc
+so $HOME/.vimrc_local
