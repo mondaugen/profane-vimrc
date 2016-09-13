@@ -94,7 +94,7 @@ map ,el :s/^/#else /<CR>A <Esc>:nohls<CR>i
 map ,ef :s/^/#endif /<CR>A <Esc>:nohls<CR>i
 
 " automatic header gates when opening file
-function! s:insert_gates()
+function! s:Insert_gates()
   let gatename = substitute(toupper(expand("%:t")), "\\.", "_", "g")
   execute "normal! i#ifndef " . gatename
   execute "normal! o#define " . gatename . " "
@@ -104,7 +104,7 @@ endfunction
 autocmd BufNewFile *.{h,hpp} call <SID>insert_gates()
 
 " header gates once in file, type: <Esc>:call g:hdrgt()
-function! g:hdrgt()
+function! g:Hdrgt()
   let gatename = substitute(toupper(expand("%:t")), "\\.", "_", "g")
   execute "normal! i#ifndef " . gatename
   execute "normal! o#define " . gatename . " "
@@ -113,7 +113,7 @@ function! g:hdrgt()
 endfunction
 
 " an #ifdef __cplusplus gate
-function! g:cppdfgt()
+function! g:Cppdfgt()
     execute "normal! i#undef __BEGIN_DECLS\n"
     execute "normal! i#undef __END_DECLS\n"
     execute "normal! i#ifdef __cplusplus\n"
@@ -128,7 +128,7 @@ function! g:cppdfgt()
 endfunction
 
 " move a backslash to the furthest right column (for #define ... \ constructs)
-function! g:rjdfbs()
+function! g:Rjdfbs()
     let b:indtamt = &tw - virtcol(".") - 1
     let i = 0
     while i < b:indtamt
@@ -255,4 +255,6 @@ map  :w
 map  :
 
 " Source site vimrc
-so $HOME/.vimrc_local
+if filereadable($HOME + "/.vimrc_local")
+    so $HOME/.vimrc_local
+endif
