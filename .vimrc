@@ -101,7 +101,7 @@ function! s:Insert_gates()
   execute "normal! Go#endif /* " . gatename . " */"
   normal! kk
 endfunction
-autocmd BufNewFile *.{h,hpp} call <SID>insert_gates()
+autocmd BufNewFile *.{h,hpp} call <SID>Insert_gates()
 
 " header gates once in file, type: <Esc>:call g:hdrgt()
 function! g:Hdrgt()
@@ -139,9 +139,9 @@ function! g:Rjdfbs()
     unlet i
 endfunction
 " right justify character
-map ,rjc :call g:rjdfbs()<CR>
+map ,rjc :call g:Rjdfbs()<CR>
 " right justify last character
-map ,rjlc @="$:call g:rjdfbs()\rj"<CR>
+map ,rjlc @="$:call g:Rjdfbs()\rj"<CR>
 
 "if has("vms")
 set nobackup		" do not keep a backup file, use versions instead
@@ -222,12 +222,12 @@ if !exists(":DiffOrig")
 		  \ | wincmd p | diffthis
 endif
 
-function! s:insert_html_skeleton()
+function! s:Insert_html_skeleton()
   execute "normal! i<!DOCTYPE html>\n<html>\n<head>\n<meta http-equiv='Content-Type' "
   execute "normal! i content='text/html:charset=utf-8' />\n</head>\n<body>\n</body>\n</html>"
   execute "normal! gg=G"
 endfunction
-autocmd BufNewFile *.{htm,html} call <SID>insert_html_skeleton()
+autocmd BufNewFile *.{htm,html} call <SID>Insert_html_skeleton()
 
 " Toggle relative number
 function! RNU_toggle()
