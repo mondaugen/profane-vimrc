@@ -255,6 +255,12 @@ map  :w
 map  :
 
 " Source site vimrc
-if filereadable($HOME + "/.vimrc_local")
+if filereadable($HOME . "/.vimrc_local")
     so $HOME/.vimrc_local
+endif
+
+" Start pathogen if exists
+if filereadable($HOME . "/.vim/autoload/pathogen.vim")
+    execute pathogen#infect()
+    let g:vim_markdown_folding_disabled = 1
 endif
