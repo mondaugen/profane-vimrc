@@ -253,6 +253,12 @@ colo koehler
 map  :w
 " Map CTRL-N to :
 map  :
+" Map CTRL-T to CTRL-I to do indenting
+inoremap <C-I> <C-T>
+" Unmap or else it will indent whole line
+iunmap <Tab>
+" Map CTRL-T to do readline style character swaps
+inoremap <C-T> hxpa 
 
 " Source site vimrc
 if filereadable($HOME . "/.vimrc_local")
