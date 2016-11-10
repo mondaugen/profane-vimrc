@@ -256,3 +256,6 @@ map  :
 
 " Source site vimrc
 so $HOME/.vimrc_local
+
+" Redraw syntax highlighting
+map ,ss <Esc>:syntax sync fromstart<CR>
