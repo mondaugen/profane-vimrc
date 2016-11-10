@@ -94,17 +94,17 @@ map ,el :s/^/#else /<CR>A <Esc>:nohls<CR>i
 map ,ef :s/^/#endif /<CR>A <Esc>:nohls<CR>i
 
 " automatic header gates when opening file
-function! s:insert_gates()
+function! s:Insert_gates()
   let gatename = substitute(toupper(expand("%:t")), "\\.", "_", "g")
   execute "normal! i#ifndef " . gatename
   execute "normal! o#define " . gatename . " "
   execute "normal! Go#endif /* " . gatename . " */"
   normal! kk
 endfunction
-autocmd BufNewFile *.{h,hpp} call <SID>insert_gates()
+autocmd BufNewFile *.{h,hpp} call <SID>Insert_gates()
 
 " header gates once in file, type: <Esc>:call g:hdrgt()
-function! g:hdrgt()
+function! g:Hdrgt()
   let gatename = substitute(toupper(expand("%:t")), "\\.", "_", "g")
   execute "normal! i#ifndef " . gatename
   execute "normal! o#define " . gatename . " "
@@ -113,7 +113,7 @@ function! g:hdrgt()
 endfunction
 
 " an #ifdef __cplusplus gate
-function! g:cppdfgt()
+function! g:Cppdfgt()
     execute "normal! i#undef __BEGIN_DECLS\n"
     execute "normal! i#undef __END_DECLS\n"
     execute "normal! i#ifdef __cplusplus\n"
@@ -128,7 +128,7 @@ function! g:cppdfgt()
 endfunction
 
 " move a backslash to the furthest right column (for #define ... \ constructs)
-function! g:rjdfbs()
+function! g:Rjdfbs()
     let b:indtamt = &tw - virtcol(".") - 1
     let i = 0
     while i < b:indtamt
@@ -139,9 +139,9 @@ function! g:rjdfbs()
     unlet i
 endfunction
 " right justify character
-map ,rjc :call g:rjdfbs()<CR>
+map ,rjc :call g:Rjdfbs()<CR>
 " right justify last character
-map ,rjlc @="$:call g:rjdfbs()\rj"<CR>
+map ,rjlc @="$:call g:Rjdfbs()\rj"<CR>
 
 "if has("vms")
 set nobackup		" do not keep a backup file, use versions instead
@@ -222,12 +222,12 @@ if !exists(":DiffOrig")
 		  \ | wincmd p | diffthis
 endif
 
-function! s:insert_html_skeleton()
+function! s:Insert_html_skeleton()
   execute "normal! i<!DOCTYPE html>\n<html>\n<head>\n<meta http-equiv='Content-Type' "
   execute "normal! i content='text/html:charset=utf-8' />\n</head>\n<body>\n</body>\n</html>"
   execute "normal! gg=G"
 endfunction
-autocmd BufNewFile *.{htm,html} call <SID>insert_html_skeleton()
+autocmd BufNewFile *.{htm,html} call <SID>Insert_html_skeleton()
 
 " Toggle relative number
 function! RNU_toggle()
@@ -254,8 +254,124 @@ map  :w
 " Map CTRL-N to :
 map  :
 
-" Source site vimrc
-so $HOME/.vimrc_local
+" Map CTRL-T to CTRL-I to do indenting
+inoremap <C-I> <C-T>
+" Unmap or else it will indent whole line
+iunmap <Tab>
+" Map CTRL-T to do readline style character swaps
+inoremap <C-T> hxpa 
+
+" Map N so that it centres the window when searching
+nnoremap n nzz
+nnoremap N Nzz
+" Map CTRL-E differently in insert mode
+" Deletes until a character is found
+inoremap <C-E> <Nop>
+inoremap <C-E><C-E> <Esc>d;i<Right><BS>
+inoremap <C-E>` <Esc>dF`i<Right><BS>
+inoremap <C-E>~ <Esc>dF~i<Right><BS>
+inoremap <C-E>1 <Esc>dF1i<Right><BS>
+inoremap <C-E>! <Esc>dF!i<Right><BS>
+inoremap <C-E>2 <Esc>dF2i<Right><BS>
+inoremap <C-E>@ <Esc>dF@i<Right><BS>
+inoremap <C-E>3 <Esc>dF3i<Right><BS>
+inoremap <C-E># <Esc>dF#i<Right><BS>
+inoremap <C-E>4 <Esc>dF4i<Right><BS>
+inoremap <C-E>$ <Esc>dF$i<Right><BS>
+inoremap <C-E>5 <Esc>dF5i<Right><BS>
+inoremap <C-E>% <Esc>dF%i<Right><BS>
+inoremap <C-E>6 <Esc>dF6i<Right><BS>
+inoremap <C-E>^ <Esc>dF^i<Right><BS>
+inoremap <C-E>7 <Esc>dF7i<Right><BS>
+inoremap <C-E>& <Esc>dF&i<Right><BS>
+inoremap <C-E>8 <Esc>dF8i<Right><BS>
+inoremap <C-E>* <Esc>dF*i<Right><BS>
+inoremap <C-E>9 <Esc>dF9i<Right><BS>
+inoremap <C-E>( <Esc>dF(i<Right><BS>
+inoremap <C-E>0 <Esc>dF0i<Right><BS>
+inoremap <C-E>) <Esc>dF)i<Right><BS>
+inoremap <C-E>- <Esc>dF-i<Right><BS>
+inoremap <C-E>_ <Esc>dF_i<Right><BS>
+inoremap <C-E>= <Esc>dF=i<Right><BS>
+inoremap <C-E>+ <Esc>dF+i<Right><BS>
+inoremap <C-E>q <Esc>dFqi<Right><BS>
+inoremap <C-E>Q <Esc>dFQi<Right><BS>
+inoremap <C-E>w <Esc>dFwi<Right><BS>
+inoremap <C-E>W <Esc>dFWi<Right><BS>
+inoremap <C-E>e <Esc>dFei<Right><BS>
+inoremap <C-E>E <Esc>dFEi<Right><BS>
+inoremap <C-E>r <Esc>dFri<Right><BS>
+inoremap <C-E>R <Esc>dFRi<Right><BS>
+inoremap <C-E>t <Esc>dFti<Right><BS>
+inoremap <C-E>T <Esc>dFTi<Right><BS>
+inoremap <C-E>y <Esc>dFyi<Right><BS>
+inoremap <C-E>Y <Esc>dFYi<Right><BS>
+inoremap <C-E>u <Esc>dFui<Right><BS>
+inoremap <C-E>U <Esc>dFUi<Right><BS>
+inoremap <C-E>i <Esc>dFii<Right><BS>
+inoremap <C-E>I <Esc>dFIi<Right><BS>
+inoremap <C-E>o <Esc>dFoi<Right><BS>
+inoremap <C-E>O <Esc>dFOi<Right><BS>
+inoremap <C-E>p <Esc>dFpi<Right><BS>
+inoremap <C-E>P <Esc>dFPi<Right><BS>
+inoremap <C-E>[ <Esc>dF[i<Right><BS>
+inoremap <C-E>{ <Esc>dF{i<Right><BS>
+inoremap <C-E>] <Esc>dF]i<Right><BS>
+inoremap <C-E>} <Esc>dF}i<Right><BS>
+inoremap <C-E>\ <Esc>dF\i<Right><BS>
+inoremap <C-E>a <Esc>dFai<Right><BS>
+inoremap <C-E>A <Esc>dFAi<Right><BS>
+inoremap <C-E>s <Esc>dFsi<Right><BS>
+inoremap <C-E>S <Esc>dFSi<Right><BS>
+inoremap <C-E>d <Esc>dFdi<Right><BS>
+inoremap <C-E>D <Esc>dFDi<Right><BS>
+inoremap <C-E>f <Esc>dFfi<Right><BS>
+inoremap <C-E>F <Esc>dFFi<Right><BS>
+inoremap <C-E>g <Esc>dFgi<Right><BS>
+inoremap <C-E>G <Esc>dFGi<Right><BS>
+inoremap <C-E>h <Esc>dFhi<Right><BS>
+inoremap <C-E>H <Esc>dFHi<Right><BS>
+inoremap <C-E>j <Esc>dFji<Right><BS>
+inoremap <C-E>J <Esc>dFJi<Right><BS>
+inoremap <C-E>k <Esc>dFki<Right><BS>
+inoremap <C-E>K <Esc>dFKi<Right><BS>
+inoremap <C-E>l <Esc>dFli<Right><BS>
+inoremap <C-E>L <Esc>dFLi<Right><BS>
+inoremap <C-E>; <Esc>dF;i<Right><BS>
+inoremap <C-E>: <Esc>dF:i<Right><BS>
+inoremap <C-E>' <Esc>dF'i<Right><BS>
+inoremap <C-E>" <Esc>dF"i<Right><BS>
+inoremap <C-E>z <Esc>dFzi<Right><BS>
+inoremap <C-E>Z <Esc>dFZi<Right><BS>
+inoremap <C-E>x <Esc>dFxi<Right><BS>
+inoremap <C-E>X <Esc>dFXi<Right><BS>
+inoremap <C-E>c <Esc>dFci<Right><BS>
+inoremap <C-E>C <Esc>dFCi<Right><BS>
+inoremap <C-E>v <Esc>dFvi<Right><BS>
+inoremap <C-E>V <Esc>dFVi<Right><BS>
+inoremap <C-E>b <Esc>dFbi<Right><BS>
+inoremap <C-E>B <Esc>dFBi<Right><BS>
+inoremap <C-E>n <Esc>dFni<Right><BS>
+inoremap <C-E>N <Esc>dFNi<Right><BS>
+inoremap <C-E>m <Esc>dFmi<Right><BS>
+inoremap <C-E>M <Esc>dFMi<Right><BS>
+inoremap <C-E>, <Esc>dF,i<Right><BS>
+inoremap <C-E>< <Esc>dF<i<Right><BS>
+inoremap <C-E>. <Esc>dF.i<Right><BS>
+inoremap <C-E>> <Esc>dF>i<Right><BS>
+inoremap <C-E>/ <Esc>dF/i<Right><BS>
+inoremap <C-E>? <Esc>dF?i<Right><BS>
 
 " Redraw syntax highlighting
 map ,ss <Esc>:syntax sync fromstart<CR>
+
+" Source site vimrc
+if filereadable($HOME . "/.vimrc_local")
+    so $HOME/.vimrc_local
+endif
+
+" Start pathogen if exists
+if filereadable($HOME . "/.vim/autoload/pathogen.vim")
+    execute pathogen#infect()
+    let g:vim_markdown_folding_disabled = 1
+endif
