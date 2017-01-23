@@ -362,6 +362,9 @@ inoremap <C-E>> <Esc>dF>i<Right><BS>
 inoremap <C-E>/ <Esc>dF/i<Right><BS>
 inoremap <C-E>? <Esc>dF?i<Right><BS>
 
+" Split line in normal mode using K
+nmap K m'a<CR><Esc>`'
+
 " Redraw syntax highlighting
 map ,ss <Esc>:syntax sync fromstart<CR>
 
