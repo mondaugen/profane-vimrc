@@ -368,6 +368,9 @@ nmap K m'a<CR><Esc>`'
 " Redraw syntax highlighting
 map ,ss <Esc>:syntax sync fromstart<CR>
 
+" Resize to 88 columns (80 columns text)
+nmap ,cc <Esc>:se columns=88<CR>
+
 " Source site vimrc
 if filereadable($HOME . "/.vimrc_local")
     so $HOME/.vimrc_local
