@@ -409,8 +409,10 @@ function! GuiTabLabel()
 endfunction
 set guitablabel=%{GuiTabLabel()}
 nmap ,gt <Esc>:set guitablabel=%{GuiTabLabel()}<CR>
+
 "" Display 'word' indices in the status line and supply functions for jumping to
 "" these words
+"" Cannot yet be combined with yanking etc., only for cursor movement.
 
 " Get the indices of words on the current line
 function! g:GetWordIndices()
@@ -519,3 +521,6 @@ nmap <silent> ~ :<C-U>call g:GoToNthWord(v:count)<CR>
 " Optionally if you don't like the status line
 " :hi StatusLine guibg=darkblue guifg=white
 " :hi StatusLineNC guifg=black guibg=darkblue
+
+" Map ,, to ,
+noremap ,, ,
