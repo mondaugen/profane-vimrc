@@ -45,21 +45,22 @@ map ,ev :tabe $MYVIMRC<CR>
 set tags+=~/.vim/systags
 
 "quick lhs comments
+"removed many that I never use
 map ,# :s/^/#/<CR> <Esc>:nohlsearch <CR>
 map ,/ :s/^/\/\//<CR> <Esc>:nohlsearch <CR>
-map ,> :s/^/> /<CR> <Esc>:nohlsearch<CR>
+"map ,> :s/^/> /<CR> <Esc>:nohlsearch<CR>
 map ," :s/^/\"/<CR> <Esc>:nohlsearch<CR>
 map ,% :s/^/%/<CR> <Esc>:nohlsearch<CR>
-map ,! :s/^/!/<CR> <Esc>:nohlsearch<CR>
-map ,; :s/^/;/<CR> <Esc>:nohlsearch<CR>
-map ,- :s/^/--/<CR> <Esc>:nohlsearch<CR>
-map ,c :s/^\/\/\\|^--\\|^> \\|^[#"%!;]//<CR> <Esc>:nohlsearch<CR>
+"map ,! :s/^/!/<CR> <Esc>:nohlsearch<CR>
+"map ,; :s/^/;/<CR> <Esc>:nohlsearch<CR>
+"map ,- :s/^/--/<CR> <Esc>:nohlsearch<CR>
+"map ,c :s/^\/\/\\|^--\\|^> \\|^[#"%!;]//<CR> <Esc>:nohlsearch<CR>
 
 " quick wrapping comments
 map ,* :s/^\(.*\)$/\/\* \1 \*\//<CR> <Esc>:nohlsearch<CR>
-map ,( :s/^\(.*\)$/\(\* \1 \*\)/<CR><Esc>:nohlsearch <CR>
+"map ,( :s/^\(.*\)$/\(\* \1 \*\)/<CR><Esc>:nohlsearch <CR>
 map ,< :s/^\(.*\)$/<!-- \1 -->/<CR> <Esc>:nohlsearch<CR>
-map ,d :s/^\([/(]\*\\|<!--\) \(.*\) \(\*[/)]\\|-->\)$/\2/<CR> <Esc>:nohlsearch<CR>
+"map ,d :s/^\([/(]\*\\|<!--\) \(.*\) \(\*[/)]\\|-->\)$/\2/<CR> <Esc>:nohlsearch<CR>
 
 " quick nohighlighted search
 map ,nh <Esc>:nohlsearch<CR>
@@ -372,3 +373,149 @@ if filereadable($HOME . "/.vim/autoload/pathogen.vim")
     execute pathogen#infect()
     let g:vim_markdown_folding_disabled = 1
 endif
+
+" Number tab titles
+set showtabline=2 " always show tabs in gvim, but not vim
+" set up tab labels with tab number, buffer name, number of windows
+function! GuiTabLabel()
+  let label = ''
+  let bufnrlist = tabpagebuflist(v:lnum)
+  " Add '+' if one of the buffers in the tab page is modified
+  for bufnr in bufnrlist
+    if getbufvar(bufnr, "&modified")
+      let label = '+'
+      break
+    endif
+  endfor
+  " Append the tab number
+  let label .= v:lnum.': '
+  " Append the buffer name
+  let name = bufname(bufnrlist[tabpagewinnr(v:lnum) - 1])
+  if name == ''
+    " give a name to no-name documents
+    if &buftype=='quickfix'
+      let name = '[Quickfix List]'
+    else
+      let name = '[No Name]'
+    endif
+  else
+    " get only the file name
+    let name = fnamemodify(name,":t")
+  endif
+  let label .= name
+  " Append the number of windows in the tab page
+  let wincount = tabpagewinnr(v:lnum, '$')
+  return label . '  [' . wincount . ']'
+endfunction
+set guitablabel=%{GuiTabLabel()}
+nmap ,gt <Esc>:set guitablabel=%{GuiTabLabel()}<CR>
+"" Display 'word' indices in the status line and supply functions for jumping to
+"" these words
+
+" Get the indices of words on the current line
+function! g:GetWordIndices()
+    let idcs=[]
+    let line=getline('.')
+    let mtchcnt=1
+    let curmch=match(line,'\<\k\+',0,mtchcnt)
+    while (curmch != -1)
+        let idcs += [curmch]
+        let mtchcnt += 1
+        let curmch=match(line,'\<\k\+',0,mtchcnt)
+    endwhile
+    return idcs
+endfunction
+
+" Jump to the nth match of GetWordIndices where 1 is the first, 2 is the second
+" etc.
+function! g:GoToNthWord(nth)
+    if (a:nth < 1)
+        return
+    endif
+    let idcs=g:GetWordIndices()
+    if (a:nth > len(idcs))
+        return
+    endif
+    execute "normal " . (idcs[a:nth - 1] + 1) . "|"
+endfunction
+
+function! g:ShowWords(cols)
+    let idcs=g:GetWordIndices()
+    let imax=max(idcs)
+    "echo imax
+    let strl=[]
+    " increment imax by the string length of the last idcs index number
+    let imax += strlen(printf('%d',len(idcs)+1))
+    while (imax >= 0)
+        let strl += ['-']
+        let imax -= 1
+    endwhile
+    let l = len(idcs)
+    let l -= 1
+    while (l >= 0)
+        let numstr = printf('%d',l+1)
+        let lstr = strlen(numstr)
+        while (lstr > 0)
+            let lstr -= 1
+            let strl[idcs[l] + lstr] = numstr[lstr]
+        endwhile
+        let l -= 1
+    endwhile
+    " Set status line to show word numbers
+    let str=join(strl,'')
+    let numw=wincol()-virtcol('.')
+    let prep=''
+    while (numw > 0)
+        let prep = prep . '-'
+        let numw -= 1
+    endwhile
+    execute 'setlocal statusline=' . prep . str
+    " Colour columns, too
+    if (a:cols != 0)
+        let ccols=''
+        let l = len(idcs) - 1
+        while (l >= 0) 
+            let ccols=ccols . printf("%d",idcs[l] + 1) . ','
+            let l = l - 1
+        endwhile
+        execute 'setlocal colorcolumn=' . ccols[:-2]
+    endif
+
+endfunction
+
+function! g:CountTest(cnt)
+    echo printf('%d',a:cnt)
+endfunction
+
+function! g:RegisterWordJumpCntFuncs(cols)
+    " This doesn't work as expected because laststatus cannot be set locally
+"    let b:RegisterWordJumpCntFuncs_lastlaststatus=&laststatus
+    setlocal laststatus=2
+    augroup wordJumpCntFuncs
+        " remove all commands
+        au! * <buffer>
+        if (a:cols==0)
+            au! CursorMoved <buffer> call g:ShowWords(0)
+            call g:ShowWords(0)
+        else
+            au! CursorMoved <buffer> call g:ShowWords(1)
+            call g:ShowWords(1)
+        endif
+    augroup END
+endfunction
+
+function! g:RemoveWordJumpCntFuncs(col)
+"    execute 'setlocal laststatus=' . b:RegisterWordJumpCntFuncs_lastlaststatus
+    setlocal laststatus=0
+    au! wordJumpCntFuncs * <buffer>
+endfunction
+
+nmap ,wj :<C-U>call g:RegisterWordJumpCntFuncs(0)<CR>
+nmap ,nwj :<C-U>call g:RemoveWordJumpCntFuncs(0)<CR>
+" I never use ~ for original purpose so unmap it
+nnoremap ~ <NOP>
+nmap <silent> ~ :<C-U>call g:GoToNthWord(v:count)<CR>
+
+" Optionally if you don't like the status line
+" :hi StatusLine guibg=darkblue guifg=white
+" :hi StatusLineNC guifg=black guibg=darkblue
