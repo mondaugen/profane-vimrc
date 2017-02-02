@@ -384,7 +384,7 @@ if filereadable($HOME . "/.vim/autoload/pathogen.vim")
 endif
 
 " Number tab titles
-set showtabline=2 " always show tabs in gvim, but not vim
+set showtabline=0 " don't show tab lines by default
 " set up tab labels with tab number, buffer name, number of windows
 function! GuiTabLabel()
   let label = ''
@@ -533,3 +533,7 @@ nmap <silent> ~ :<C-U>call g:GoToNthWord(v:count)<CR>
 
 " Map ,, to ,
 noremap ,, ,
+
+" Remove GUI elements I never use
+set guioptions-=T
+set guioptions-=m
