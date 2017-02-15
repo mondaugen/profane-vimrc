@@ -533,3 +533,8 @@ nmap <silent> ~ :<C-U>call g:GoToNthWord(v:count)<CR>
 
 " Map ,, to ,
 noremap ,, ,
+" I also never use _ so this can be mapped
+noremap _ ,
+
+" Map :ls to CTRL-L (I think redraw still called, which is fine)
+nmap <C-L> <Esc>:ls<CR>
