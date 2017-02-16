@@ -537,3 +537,7 @@ noremap ,, ,
 " Remove GUI elements I never use
 set guioptions-=T
 set guioptions-=m
+
+" Remove increment and decrement
+map <C-A> <NOP>
+map <C-X> <NOP>
