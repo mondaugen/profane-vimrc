@@ -533,11 +533,12 @@ nmap <silent> ~ :<C-U>call g:GoToNthWord(v:count)<CR>
 
 " Map ,, to ,
 noremap ,, ,
-
-" Remove GUI elements I never use
-set guioptions-=T
-set guioptions-=m
+" I also never use _ so this can be mapped
+noremap _ ,
 
 " Remove increment and decrement
 map <C-A> <NOP>
 map <C-X> <NOP>
+
+" Map :ls to CTRL-L (I think redraw still called, which is fine)
+nmap <C-L> <Esc>:ls<CR>
