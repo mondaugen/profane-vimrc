@@ -542,3 +542,6 @@ map <C-X> <NOP>
 
 " Map :ls to CTRL-L (I think redraw still called, which is fine)
 nmap <C-L> <Esc>:ls<CR>
+
+" Map :marks to CTRL-M (disables calling + command)
+nnoremap <C-M> <Esc>:marks<CR>
