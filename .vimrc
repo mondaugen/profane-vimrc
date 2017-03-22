@@ -545,3 +545,6 @@ nmap <C-L> <Esc>:ls<CR>
 
 " Map :marks to CTRL-M (disables calling + command)
 nnoremap <C-M> <Esc>:marks<CR>
+
+" Allow hidden buffers
+se hidden
