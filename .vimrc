@@ -548,3 +548,15 @@ nnoremap <C-M> <Esc>:marks<CR>
 
 " Allow hidden buffers
 se hidden
+
+" Set dictionary file if exists
+if filereadable("/usr/share/dict/words")
+    set dictionary=/usr/share/dict/words
+endif
+
+" Print current file
+nnoremap ,cf <Esc>:echo @%<CR>
+
+" Get your indent back on an empty line
+nnoremap ,o ddo
+
