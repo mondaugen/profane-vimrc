@@ -557,6 +557,17 @@ endif
 " Print current file
 nnoremap ,cf <Esc>:echo @%<CR>
 
-" Get your indent back on an empty line
+" Get your indent back on an empty line (doesn't work)
 nnoremap ,o ddo
 
+" move forward in insert mode without arrow keys
+imap <C-F> <C-O>l
+
+" move backward in insert mode without arrow keys
+imap <C-B> <C-O>h
+
+" move forward word in insert mode without arrow keys
+imap <C-Z><C-F> <C-O>w
+
+" move backward word in insert mode without arrow keys
+imap <C-Z><C-B> <C-O>b
