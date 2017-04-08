@@ -558,3 +558,23 @@ nmap <C-L>s :let x=system("grep -n section " . expand("%") . " \| sort -n") \| e
 nmap <C-L>f :let x=system("ctags -x " . expand("%") . " \| awk '{$1=\"\";$2=\"\";$4=\"\";print $0}' \| sort -n") \| echo x<CR>
 "List functions, a bit janky but lets you search for strings
 nmap <C-L>F :!ctags -x <C-R>% \| awk '{$1="";$2="";$4="";print $0 }' \| sort -n \|less<CR>
+
+" Set dictionary file if exists
+if filereadable("/usr/share/dict/words")
+    set dictionary=/usr/share/dict/words
+endif
+
+" Print current file
+nnoremap ,cf <Esc>:echo @%<CR>
+
+" move forward in insert mode without arrow keys
+imap <C-F> <C-O>l
+
+" move backward in insert mode without arrow keys
+imap <C-B> <C-O>h
+
+" move forward word in insert mode without arrow keys
+imap <C-Z><C-F> <C-O>w
+
+" move backward word in insert mode without arrow keys
+imap <C-Z><C-B> <C-O>b
