@@ -540,11 +540,21 @@ noremap _ ,
 map <C-A> <NOP>
 map <C-X> <NOP>
 
-" Map :ls to CTRL-L (I think redraw still called, which is fine)
-nmap <C-L> <Esc>:ls<CR>
-
 " Map :marks to CTRL-M (disables calling + command)
 nnoremap <C-M> <Esc>:marks<CR>
 
 " Allow hidden buffers
 se hidden
+
+"List buffers
+nmap  <C-L>b :buffers<CR>
+"List changes
+nmap  <C-L>c :changes<CR> 
+"List jumps
+nmap  <C-L>j :jumps<CR>
+"List sections (useful for latex files)
+nmap <C-L>s :let x=system("grep -n section " . expand("%") . " \| sort -n") \| echo x<CR>
+"List functions
+nmap <C-L>f :let x=system("ctags -x " . expand("%") . " \| awk '{$1=\"\";$2=\"\";$4=\"\";print $0}' \| sort -n") \| echo x<CR>
+"List functions, a bit janky but lets you search for strings
+nmap <C-L>F :!ctags -x <C-R>% \| awk '{$1="";$2="";$4="";print $0 }' \| sort -n \|less<CR>
