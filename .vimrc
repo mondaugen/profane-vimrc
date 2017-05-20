@@ -578,3 +578,6 @@ imap <C-Z><C-F> <C-O>w
 
 " move backward word in insert mode without arrow keys
 imap <C-Z><C-B> <C-O>b
+
+" No inner stars on C-style-comments
+autocmd BufNewFile *.{h,hpp,c,cpp,cc} se comments=://,b:#,:%,:XCOMM,n:>,fb:- 
