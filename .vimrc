@@ -580,4 +580,7 @@ imap <C-Z><C-F> <C-O>w
 imap <C-Z><C-B> <C-O>b
 
 " No inner stars on C-style-comments
-autocmd BufNewFile *.{h,hpp,c,cpp,cc} se comments=://,b:#,:%,:XCOMM,n:>,fb:- 
+autocmd BufRead,BufNewFile *.{h,hpp,c,cpp,cc} se comments=://,b:#,:%,:XCOMM,n:>,fb:- 
+
+" Insert C-style comment
+nmap ,cc i/*  */<Esc>2hi
