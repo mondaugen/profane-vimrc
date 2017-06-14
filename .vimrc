@@ -578,3 +578,9 @@ imap <C-Z><C-F> <C-O>w
 
 " move backward word in insert mode without arrow keys
 imap <C-Z><C-B> <C-O>b
+
+" copy current file basename to clipboard
+nmap ,cpf :let @+=expand("%:t")<CR>
+
+" copy full current file name to clipboard
+nmap ,cpF :let @+=@%<CR>
