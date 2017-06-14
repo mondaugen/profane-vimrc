@@ -584,3 +584,9 @@ nmap ,cpf :let @+=expand("%:t")<CR>
 
 " copy full current file name to clipboard
 nmap ,cpF :let @+=@%<CR>
+
+" No inner stars on C-style-comments
+autocmd BufRead,BufNewFile *.{h,hpp,c,cpp,cc} se comments=://,b:#,:%,:XCOMM,n:>,fb:- 
+
+" Insert C-style comment
+nmap ,cc i/*  */<Esc>2hi
