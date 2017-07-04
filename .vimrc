@@ -558,6 +558,8 @@ nmap <C-L>s :let x=system("grep -n section " . expand("%") . " \| sort -n") \| e
 nmap <C-L>f :let x=system("ctags -x " . expand("%") . " \| awk '{$1=\"\";$2=\"\";$4=\"\";print $0}' \| sort -n") \| echo x<CR>
 "List functions, a bit janky but lets you search for strings
 nmap <C-L>F :!ctags -x <C-R>% \| awk '{$1="";$2="";$4="";print $0 }' \| sort -n \|less<CR>
+"List tabs
+nmap <C-L>t :tabs<CR>
 
 " Set dictionary file if exists
 if filereadable("/usr/share/dict/words")
