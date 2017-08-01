@@ -592,3 +592,14 @@ autocmd BufRead,BufNewFile *.{h,hpp,c,cpp,cc} se comments=://,b:#,:%,:XCOMM,n:>,
 
 " Insert C-style comment
 nmap ,cc i/*  */<Esc>2hi
+
+" Automatic matched parentheses and brackets
+au BufRead,BufNewFile *.{h,hpp,c,cpp,cc,py,tcl,sc,pl,m,mm} inoremap <buffer> ( ()<Esc>i
+    \| inoremap <buffer> [ []<Esc>i
+    \| inoremap <buffer> { {}<Esc>i
+    \| inoremap <buffer> < <><Esc>i
+    \| inoremap <buffer> ' ''<Esc>i
+    \| inoremap <buffer> " ""<Esc>i
+
+" stay at cursor position when switching buffers
+se nosol
