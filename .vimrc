@@ -602,3 +602,7 @@ nmap ,cc i/*  */<Esc>2hi
 
 " stay at cursor position when switching buffers
 se nosol
+
+" wipe last opened buffer (useful if you make a mistake choosing what file to
+" edit)
+nmap ,BW :bw #<CR>
