@@ -46,11 +46,11 @@ set tags+=~/.vim/systags
 
 "quick lhs comments
 "removed many that I never use
-map ,# :s/^/#/<CR> <Esc>:nohlsearch <CR>
-map ,/ :s/^/\/\//<CR> <Esc>:nohlsearch <CR>
+map ,# 0i#
+map ,/ ^i//
 "map ,> :s/^/> /<CR> <Esc>:nohlsearch<CR>
-map ," :s/^/\"/<CR> <Esc>:nohlsearch<CR>
-map ,% :s/^/%/<CR> <Esc>:nohlsearch<CR>
+map ," 0i"
+map ,% 0i%
 "map ,! :s/^/!/<CR> <Esc>:nohlsearch<CR>
 "map ,; :s/^/;/<CR> <Esc>:nohlsearch<CR>
 "map ,- :s/^/--/<CR> <Esc>:nohlsearch<CR>
@@ -72,27 +72,27 @@ nnoremap ,UL yyp<c-v>$r-
 " spell checking
 map ,sp <Esc>:setlocal spell spelllang=en_us<CR>
 
-""""""" C STUFF """""""
+" C STUFF
 
 " quick headerfile function prototypes
 " put your cursor at the beginning of a function comment
 " execute this command. you will be prompted for a headerfile you want to append
 " to. type it in and your function prototype will be appended
-map ,hfp :.,/{/-1w>>
+nmap ,hfp :.,/{/-1w>>
 " quick #define
-map ,df :s/^/#define /<CR>A <Esc>:nohls<CR>i
+nmap ,df 0i#define 
 " quick #include
-map ,in :s/^/#include /<CR>A <Esc>:nohls<CR>i
+nmap ,in 0i#include 
 " quick #ifdef
-map ,ifd :s/^/#ifdef /<CR>A <Esc>:nohls<CR>i
+nmap ,ifd 0i#ifdef 
 " quick #ifndef
-map ,ifn :s/^/#ifndef /<CR>A <Esc>:nohls<CR>i
+nmap ,ifn 0i#ifndef 
 " quick #undef
-map ,ud :s/^/#undef /<CR>A <Esc>:nohls<CR>i
+nmap ,ud 0i#undef 
 " quick #else
-map ,el :s/^/#else /<CR>A <Esc>:nohls<CR>i
+nmap ,el 0i#else 
 " quick #endif
-map ,ef :s/^/#endif /<CR>A <Esc>:nohls<CR>i
+nmap ,ef 0i#endif 
 
 " automatic header gates when opening file
 function! s:Insert_gates()
@@ -554,10 +554,10 @@ nmap  <C-L>c :changes<CR>
 nmap  <C-L>j :jumps<CR>
 "List sections (useful for latex files)
 nmap <C-L>s :let x=system("grep -n section " . expand("%") . " \| sort -n") \| echo x<CR>
-"List functions
-nmap <C-L>f :let x=system("ctags -x " . expand("%") . " \| awk '{$1=\"\";$2=\"\";$4=\"\";print $0}' \| sort -n") \| echo x<CR>
-"List functions, a bit janky but lets you search for strings
-nmap <C-L>F :!ctags -x <C-R>% \| awk '{$1="";$2="";$4="";print $0 }' \| sort -n \|less<CR>
+"List functions in c
+autocmd BufRead,BufNewFile *.{h,hpp,c,cpp,cc} nmap <C-L>f :let x=system("ctags -x --c-kinds=fp --c++-kinds=fpx -I" . expand("~/") . ".profane/ctags-id-list " . expand("%") . " \| awk '{$1=\"\";$2=\"\";$4=\"\";print $0}' \| sort -n") \| echo x<CR>
+"List functions in c, a bit janky but lets you search for strings
+autocmd BufRead,BufNewFile *.{h,hpp,c,cpp,cc} nmap <C-L>F :!ctags -x --c-kinds=fp --c++-kinds=fpx -I~/.profane/ctags-id-list <C-R>% \| awk '{$1="";$2="";$4="";print $0 }' \| sort -n \|less<CR>
 "List tabs
 nmap <C-L>t :tabs<CR>
 
