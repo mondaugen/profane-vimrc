@@ -556,6 +556,8 @@ nmap  <C-L>j :jumps<CR>
 nmap <C-L>s :let x=system("grep -n section " . expand("%") . " \| sort -n") \| echo x<CR>
 "List functions in c
 autocmd BufRead,BufNewFile *.{h,hpp,c,cpp,cc} nmap <C-L>f :let x=system("ctags -x --c-kinds=fp --c++-kinds=fpx -I" . expand("~/") . ".profane/ctags-id-list " . expand("%") . " \| awk '{$1=\"\";$2=\"\";$4=\"\";print $0}' \| sort -n") \| echo x<CR>
+"List structures, classes and members in c
+autocmd BufRead,BufNewFile *.{h,hpp,c,cpp,cc} nmap <C-L>S :let x=system("ctags -x --c-kinds=cms --c++-kinds=cms -I" . expand("~/") . ".profane/ctags-id-list " . expand("%") . " \| awk '{$1=\"\";$2=\"\";$4=\"\";print $0}' \| sort -n") \| echo x<CR>
 "List functions in c, a bit janky but lets you search for strings
 autocmd BufRead,BufNewFile *.{h,hpp,c,cpp,cc} nmap <C-L>F :!ctags -x --c-kinds=fp --c++-kinds=fpx -I~/.profane/ctags-id-list <C-R>% \| awk '{$1="";$2="";$4="";print $0 }' \| sort -n \|less<CR>
 "List tabs
