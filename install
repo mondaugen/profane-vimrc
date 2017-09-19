@@ -7,3 +7,4 @@ then
 fi
 ln -s $PWD/.vimrc $HOME/.vimrc
 ln -s $PWD/.profane $HOME/.profane
+exit 0

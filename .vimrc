@@ -251,7 +251,8 @@ se lbr
 colo koehler
 
 " Map CTRL-S to :w
-map  :w
+nmap  :w
+imap  :w
 " Map CTRL-N to :
 map  :
 
@@ -608,3 +609,10 @@ se nosol
 " wipe last opened buffer (useful if you make a mistake choosing what file to
 " edit)
 nmap ,BW :bw #<CR>
+
+"Move one over after pasting
+nnoremap P Pl
+
+"Read in screen-exchange file
+imap <C-R><C-S> <Esc>:.read /tmp/screen-exchange<CR>i
+nmap <C-R><C-S> :.read /tmp/screen-exchange<CR>
