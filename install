@@ -1,3 +1,10 @@
 #!/bin/bash
+if [ -d $HOME/.profane ];
+then
+    echo "~/.profane exists, aborting"
+    echo "if you want to install you must delete ~/.profane"
+    exit 1
+fi
 ln -s $PWD/.vimrc $HOME/.vimrc
 ln -s $PWD/.profane $HOME/.profane
+exit 0
