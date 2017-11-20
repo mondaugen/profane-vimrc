@@ -561,6 +561,10 @@ autocmd BufRead,BufNewFile *.{h,hpp,c,cpp,cc} nmap <C-L>f :let x=system("ctags -
 autocmd BufRead,BufNewFile *.{h,hpp,c,cpp,cc} nmap <C-L>S :let x=system("ctags -x --c-kinds=cms --c++-kinds=cms -I" . expand("~/") . ".profane/ctags-id-list " . expand("%") . " \| awk '{$1=\"\";$2=\"\";$4=\"\";print $0}' \| sort -n") \| echo x<CR>
 "List functions in c, a bit janky but lets you search for strings
 autocmd BufRead,BufNewFile *.{h,hpp,c,cpp,cc} nmap <C-L>F :!ctags -x --c-kinds=fp --c++-kinds=fpx -I~/.profane/ctags-id-list <C-R>% \| awk '{$1="";$2="";$4="";print $0 }' \| sort -n \|less<CR>
+"List functions in Perl
+autocmd BufRead,BufNewFile *.{pl,perl} nmap <C-L>f :let x=system("ctags -x --perl-kinds=sd " . expand("%") . " \| awk '{$1=\"\";$2=\"\";$4=\"\";print $0}' \| sort -n") \| echo x<CR>
+"List functions in Python
+autocmd BufRead,BufNewFile *.{py} nmap <C-L>f :let x=system("ctags -x --python-kinds=f " . expand("%") . " \| awk '{$1=\"\";$2=\"\";$4=\"\";print $0}' \| sort -n") \| echo x<CR>
 "List tabs
 nmap <C-L>t :tabs<CR>
 
