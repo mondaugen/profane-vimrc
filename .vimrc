@@ -616,3 +616,6 @@ nnoremap P Pl
 "Read in screen-exchange file
 imap <C-R><C-S> <Esc>:.read /tmp/screen-exchange<CR>i
 nmap <C-R><C-S> :.read /tmp/screen-exchange<CR>
+
+"Line numbers in netrw
+let g:netrw_bufsettings = 'noma nomod nu nobl nowrap ro'
