@@ -625,3 +625,6 @@ nmap <C-R><C-S> :.read /tmp/screen-exchange<CR>
 nmap ,tds yiw0itypedef struct <Esc>pa <Esc>$a;<Esc>
 "Fast struct struct_t {};, just do struct_t<Esc>,tdd
 nmap ,tdd yiw0istruct <Esc>$a {};<Esc>O
+
+"Line numbers in netrw
+let g:netrw_bufsettings = 'noma nomod nu nobl nowrap ro'
