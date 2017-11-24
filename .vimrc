@@ -620,3 +620,8 @@ nnoremap P Pl
 "Read in screen-exchange file
 imap <C-R><C-S> <Esc>:.read /tmp/screen-exchange<CR>i
 nmap <C-R><C-S> :.read /tmp/screen-exchange<CR>
+
+"Fast typedef struct struct_t struct_t, just do struct_t<Esc>,tds
+nmap ,tds yiw0itypedef struct <Esc>pa <Esc>$a;<Esc>
+"Fast struct struct_t {};, just do struct_t<Esc>,tdd
+nmap ,tdd yiw0istruct <Esc>$a {};<Esc>O
