@@ -628,3 +628,10 @@ nmap ,tdd yiw0istruct <Esc>$a {};<Esc>O
 
 "Line numbers in netrw
 let g:netrw_bufsettings = 'noma nomod nu nobl nowrap ro'
+
+"Add an empty line above or below without moving the cursor in Normal mode
+nnoremap ,o m`o<Esc>``
+nnoremap ,O m`O<Esc>``
+
+"Conditional assignment bash, call on something like VAR=defaultval
+autocmd BufRead,BufNewFile *.{sh,bash} nmap nmap ,cs 0"byt=i[ -z $"bpa] && 
