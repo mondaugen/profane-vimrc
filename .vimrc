@@ -430,10 +430,18 @@ function! g:GetWordIndices()
     let line=getline('.')
     let mtchcnt=1
     let curmch=match(line,'\<\k\+',0,mtchcnt)
+" Adjust for width of tabs
+    if (curmch != -1)
+        let curmch = strdisplaywidth(line[0:curmch-1])
+    endif
     while (curmch != -1)
         let idcs += [curmch]
         let mtchcnt += 1
         let curmch=match(line,'\<\k\+',0,mtchcnt)
+" Adjust for width of tabs
+        if (curmch != -1)
+            let curmch = strdisplaywidth(line[0:curmch-1])
+        endif
     endwhile
     return idcs
 endfunction
