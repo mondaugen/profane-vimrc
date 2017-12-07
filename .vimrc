@@ -97,6 +97,7 @@ nmap ,ef 0i#endif
 " automatic header gates when opening file
 function! s:Insert_gates()
   let gatename = substitute(toupper(expand("%:t")), "\\.", "_", "g")
+  let gatename = substitute(gatename, "-", "_", "g")
   execute "normal! i#ifndef " . gatename
   execute "normal! o#define " . gatename . " "
   execute "normal! Go#endif /* " . gatename . " */"
@@ -459,6 +460,55 @@ function! g:GoToNthWord(nth)
     execute "normal " . (idcs[a:nth - 1] + 1) . "|"
 endfunction
 
+" If l is a list of column indices of 'words' then this returns the index in l
+" of the greatest column index <= to x. If all the column indices are > x, then
+" this returns -1
+function! g:_findnearestleq(x,l)
+    let d=-1
+    let i = -1
+    if len(a:l) < 1
+        return -1
+    endif
+    while ((i+1) < len(a:l)) && (a:l[i+1] < a:x)
+        let i += 1
+    endwhile
+    return i
+endfunction
+
+" Jump to nth next Word according to indices
+function! g:GoToNextWord(nth)
+    if (a:nth == 0)
+        let nth = 1
+    else
+        let nth = a:nth
+    endif
+    let idcs=g:GetWordIndices()
+    let i=g:_findnearestleq(virtcol('.'),idcs)
+    if i < 0 || (nth + i) >= len(idcs)
+        return
+    endif
+    execute "normal " . (idcs[nth + i] + 1) . "|"
+endfunction
+
+" FIXME: This doesn't work
+" Jump to nth previous Word according to indices
+function! g:GoToPrevWord(nth)
+    if (a:nth == 0)
+        let nth = 1
+    else
+        let nth = a:nth
+    endif
+    let idcs=g:GetWordIndices()
+    let i=g:_findnearestleq(virtcol('.'),idcs)
+    if i < 0
+        return
+    endif
+    if idcs[i] != virtcol('.')
+        let i -= 1
+    endif
+    execute "normal " . (idcs[nth - (i-1)] + 1) . "|"
+endfunction
+
 function! g:ShowWords(cols)
     let idcs=g:GetWordIndices()
     let imax=max(idcs)
@@ -530,11 +580,13 @@ function! g:RemoveWordJumpCntFuncs(col)
     au! wordJumpCntFuncs * <buffer>
 endfunction
 
-nmap ,wj :<C-U>call g:RegisterWordJumpCntFuncs(0)<CR>
-nmap ,nwj :<C-U>call g:RemoveWordJumpCntFuncs(0)<CR>
+nmap ,rwj :<C-U>call g:RegisterWordJumpCntFuncs(0)<CR>
+nmap ,rnwj :<C-U>call g:RemoveWordJumpCntFuncs(0)<CR>
 " I never use ~ for original purpose so unmap it
 nnoremap ~ <NOP>
 nmap <silent> ~ :<C-U>call g:GoToNthWord(v:count)<CR>
+nmap <silent> ,w :<C-U>call g:GoToNextWord(v:count)<CR>
+nmap <silent> ,b :<C-U>call g:GoToPrevWord(v:count)<CR>
 
 " Optionally if you don't like the status line
 " :hi StatusLine guibg=darkblue guifg=white
@@ -573,6 +625,7 @@ autocmd BufRead,BufNewFile *.{h,hpp,c,cpp,cc} nmap <C-L>F :!ctags -x --c-kinds=f
 autocmd BufRead,BufNewFile *.{pl,perl} nmap <C-L>f :let x=system("ctags -x --perl-kinds=sd " . expand("%") . " \| awk '{$1=\"\";$2=\"\";$4=\"\";print $0}' \| sort -n") \| echo x<CR>
 "List functions in Python
 autocmd BufRead,BufNewFile *.{py} nmap <C-L>f :let x=system("ctags -x --python-kinds=f " . expand("%") . " \| awk '{$1=\"\";$2=\"\";$4=\"\";print $0}' \| sort -n") \| echo x<CR>
+autocmd BufRead,BufNewFile *.vimrc,*.{vim} nmap <C-L>f :let x=system("ctags -x --vim-kinds=fc " . expand("%") . " \| awk '{$1=\"\";$2=\"\";$4=\"\";print $0}' \| sort -n") \| echo x<CR>
 "List tabs
 nmap <C-L>t :tabs<CR>
 
