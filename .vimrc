@@ -460,54 +460,64 @@ function! g:GoToNthWord(nth)
     execute "normal " . (idcs[a:nth - 1] + 1) . "|"
 endfunction
 
-" If l is a list of column indices of 'words' then this returns the index in l
-" of the greatest column index <= to x. If all the column indices are > x, then
-" this returns -1
-function! g:_findnearestleq(x,l)
-    let d=-1
-    let i = -1
-    if len(a:l) < 1
-        return -1
+function! g:GoToAdjWord(arg,dir)
+    let arg = a:arg
+    if (a:arg == 0)
+        let arg = 1
     endif
-    while ((i+1) < len(a:l)) && (a:l[i+1] < a:x)
-        let i += 1
-    endwhile
-    return i
-endfunction
-
-" Jump to nth next Word according to indices
-function! g:GoToNextWord(nth)
-    if (a:nth == 0)
-        let nth = 1
-    else
-        let nth = a:nth
-    endif
-    let idcs=g:GetWordIndices()
-    let i=g:_findnearestleq(virtcol('.'),idcs)
-    if i < 0 || (nth + i) >= len(idcs)
+    let vc = virtcol('.') - 1
+    let wi = g:GetWordIndices()
+    if len(wi) <= 0
         return
     endif
-    execute "normal " . (idcs[nth + i] + 1) . "|"
-endfunction
-
-" FIXME: This doesn't work
-" Jump to nth previous Word according to indices
-function! g:GoToPrevWord(nth)
-    if (a:nth == 0)
-        let nth = 1
+    let mc = 0
+    if (a:dir == 0)
+        " going backwards
+        let i = len(wi)
+        if vc <= wi[0]
+            let i = 0
+        endif
+        while ((i - 1) >= 0) && (wi[i-1] >= vc)
+            let i -= 1
+        endwhile
+        if (i <= 0)
+            " can't move back
+            return
+        elseif i == len(wi)
+            " Written this way for clarity
+            " Move to index of last word plus argument - 1 (so argument of 1
+            " simply moves to the index)
+            let idx = -1 - (arg - 1)
+            let mc = wi[idx]
+        else
+            let idx = i - arg
+            let mc = wi[idx]
+        endif
     else
-        let nth = a:nth
+        " going forwards
+        let i = -1
+        if vc >= wi[-1]
+            let i = len(wi) - 1
+        endif
+        while ((i + 1) < len(wi)) && (wi[i+1] <= vc)
+            let i += 1
+        endwhile
+        if (i >= (len(wi) - 1))
+            " can't move forward
+            return
+        elseif i == -1
+            " Written this way for clarity
+            " Move to index of first word plus argument - 1 (so argument of 1
+            " simply moves to the index)
+            let idx = 0 + (arg - 1)
+            let mc = wi[idx]
+        else
+            let idx = i + arg
+            let mc = wi[idx]
+        endif
     endif
-    let idcs=g:GetWordIndices()
-    let i=g:_findnearestleq(virtcol('.'),idcs)
-    if i < 0
-        return
-    endif
-    if idcs[i] != virtcol('.')
-        let i -= 1
-    endif
-    execute "normal " . (idcs[nth - (i-1)] + 1) . "|"
-endfunction
+    execute "normal " . (mc + 1) . "|"
+endfunction        
 
 function! g:ShowWords(cols)
     let idcs=g:GetWordIndices()
@@ -585,8 +595,8 @@ nmap ,rnwj :<C-U>call g:RemoveWordJumpCntFuncs(0)<CR>
 " I never use ~ for original purpose so unmap it
 nnoremap ~ <NOP>
 nmap <silent> ~ :<C-U>call g:GoToNthWord(v:count)<CR>
-nmap <silent> ,w :<C-U>call g:GoToNextWord(v:count)<CR>
-nmap <silent> ,b :<C-U>call g:GoToPrevWord(v:count)<CR>
+nnoremap <silent> ,w :<C-U>call g:GoToAdjWord(v:count,1)<CR>
+nnoremap <silent> ,b :<C-U>call g:GoToAdjWord(v:count,0)<CR>
 
 " Optionally if you don't like the status line
 " :hi StatusLine guibg=darkblue guifg=white
