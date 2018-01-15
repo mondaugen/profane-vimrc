@@ -706,3 +706,8 @@ nnoremap ,O m`O<Esc>``
 
 "Conditional assignment bash, call on something like VAR=defaultval
 autocmd BufRead,BufNewFile *.{sh,bash} nmap nmap ,cs 0"byt=i[ -z $"bpa] && 
+
+"Swap / Pan windows, that is, move to previous window and expand vertically or
+"horizontally
+nmap  ,pw <C-W><C-P><C-W>\|
+nmap  ,sw <C-W><C-P><C-W><C-_>
