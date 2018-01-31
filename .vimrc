@@ -372,7 +372,7 @@ nmap K m'a<CR><Esc>`'
 map ,ss <Esc>:syntax sync fromstart<CR>
 
 " Resize to 88 columns (80 columns text)
-nmap ,cc <Esc>:se columns=88<CR>
+"nmap ,cc <Esc>:se columns=88<CR>
 
 " Source site vimrc
 if filereadable($HOME . "/.vimrc_local")
@@ -705,7 +705,7 @@ nnoremap ,o m`o<Esc>``
 nnoremap ,O m`O<Esc>``
 
 "Conditional assignment bash, call on something like VAR=defaultval
-autocmd BufRead,BufNewFile *.{sh,bash} nmap nmap ,cs 0"byt=i[ -z $"bpa] && 
+autocmd BufRead,BufNewFile *.{sh,bash} nmap ,cs 0"byt=i[ -z $"bpa] && 
 
 "Swap / Pan windows, that is, move to previous window and expand vertically or
 "horizontally
