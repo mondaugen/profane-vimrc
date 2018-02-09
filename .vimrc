@@ -683,7 +683,7 @@ se nosol
 
 " wipe last opened buffer (useful if you make a mistake choosing what file to
 " edit)
-nmap ,BW :bw #<CR>
+nmap ,LBW :bw #<CR>
 
 "Move one over after pasting
 nnoremap P Pl
@@ -711,3 +711,6 @@ autocmd BufRead,BufNewFile *.{sh,bash} nmap ,cs 0"byt=i[ -z $"bpa] && 
 "horizontally
 nmap  ,pw <C-W><C-P><C-W>\|
 nmap  ,sw <C-W><C-P><C-W><C-_>
+
+nnoremap ,W /\k\+<CR>:nohlsearch<CR>
+nnoremap ,B ?\k\+<CR>:nohlsearch<CR>
