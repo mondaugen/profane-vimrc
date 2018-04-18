@@ -372,7 +372,7 @@ nmap K m'a<CR><Esc>`'
 map ,ss <Esc>:syntax sync fromstart<CR>
 
 " Resize to 88 columns (80 columns text)
-nmap ,cc <Esc>:se columns=88<CR>
+"nmap ,cc <Esc>:se columns=88<CR>
 
 " Source site vimrc
 if filereadable($HOME . "/.vimrc_local")
@@ -695,7 +695,7 @@ se nosol
 
 " wipe last opened buffer (useful if you make a mistake choosing what file to
 " edit)
-nmap ,BW :bw #<CR>
+nmap ,LBW :bw #<CR>
 
 "Move one over after pasting
 nnoremap P Pl
@@ -729,3 +729,6 @@ cmap <C-n> :<C-u>noh
 
 "Exit insert mode but don't move cursor back OMFG
 imap <C-_> <Esc>l
+
+nnoremap ,W /\k\+<CR>:nohlsearch<CR>
+nnoremap ,B ?\k\+<CR>:nohlsearch<CR>
