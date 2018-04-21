@@ -678,6 +678,7 @@ nmap ,wf :call Showfun()<CR>
 
 "List structures, classes and members in c
 autocmd BufRead,BufNewFile *.{h,hpp,c,cpp,cc} nmap <C-L>S :let x=system("ctags -x --c-kinds=cms --c++-kinds=cms -I" . expand("~/") . ".profane/ctags-id-list " . expand("%") . " \| awk '{$1=\"\";$2=\"\";$4=\"\";print $0}' \| sort -n") \| echo x<CR>
+
 "List functions in c, a bit janky but lets you search for strings
 autocmd BufRead,BufNewFile *.{h,hpp,c,cpp,cc} nmap <C-L>F :!ctags -x --c-kinds=fp --c++-kinds=fpx -I~/.profane/ctags-id-list <C-R>% \| awk '{$1="";$2="";$4="";print $0 }' \| sort -n \|less<CR>
 
@@ -708,6 +709,8 @@ imap <C-Z><C-B> <C-O>b
 
 " copy current file basename to clipboard
 nmap ,cpf :let @+=expand("%:t")<CR>
+
+nmap ,cpb :let @+=expand("%:t") . ":" . line(".")<CR>
 
 " copy full current file name to clipboard
 nmap ,cpF :let @+=@%<CR>
@@ -752,12 +755,18 @@ nnoremap ,o m`o<Esc>``
 nnoremap ,O m`O<Esc>``
 
 "Conditional assignment bash, call on something like VAR=defaultval
-autocmd BufRead,BufNewFile *.{sh,bash} nmap ,cs 0"byt=i[ -z $"bpa] && 
+autocmd BufRead,BufNewFile *.{sh,bash} nmap ,cs 0"byt=i[ -z $"bpa ] && 
 
 "Swap / Pan windows, that is, move to previous window and expand vertically or
 "horizontally
 nmap  ,pw <C-W><C-P><C-W>\|
 nmap  ,sw <C-W><C-P><C-W><C-_>
+
+"Do a search to the first match and then turn off highlighting, gawd.
+cmap <C-n> :<C-u>noh
+
+"Exit insert mode but don't move cursor back OMFG
+imap <C-_> <Esc>l
 
 nnoremap ,W /\k\+<CR>:nohlsearch<CR>
 nnoremap ,B ?\k\+<CR>:nohlsearch<CR>
