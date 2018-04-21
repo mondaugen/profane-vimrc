@@ -625,17 +625,64 @@ nmap  <C-L>c :changes<CR>
 nmap  <C-L>j :jumps<CR>
 "List sections (useful for latex files)
 nmap <C-L>s :let x=system("grep -n section " . expand("%") . " \| sort -n") \| echo x<CR>
+
+function! g:ListfunsC()
+    let x = system("ctags -x --c-kinds=fp --c++-kinds=fpx -I" . expand("~/") . ".profane/ctags-id-list " . expand("%") . " | awk '{$1=\"\";$2=\"\";$4=\"\";print $0}' | sort -n") 
+    return x
+endfunction
+
+function! g:ListfunsSCAD()
+    let x = system("grep -n -e module -e function " . expand("%"))
+    return x
+endfunction
+
+function! g:ListfunsPerl()
+    let x=system("ctags -x --perl-kinds=sd " . expand("%") . " | awk '{$1=\"\";$2=\"\";$4=\"\";print $0}' | sort -n") 
+    return x
+endfunction
+
+function! g:ListfunsPython()
+    let x=system("ctags -x --python-kinds=f " . expand("%") . " | awk '{$1=\"\";$2=\"\";$4=\"\";print $0}' | sort -n") 
+    return x
+endfunction
+
 "List functions in c
-autocmd BufRead,BufNewFile *.{h,hpp,c,cpp,cc} nmap <C-L>f :let x=system("ctags -x --c-kinds=fp --c++-kinds=fpx -I" . expand("~/") . ".profane/ctags-id-list " . expand("%") . " \| awk '{$1=\"\";$2=\"\";$4=\"\";print $0}' \| sort -n") \| echo x<CR>
+autocmd BufRead,BufNewFile *.{h,hpp,c,cpp,cc} let b:functionLister = 'ListfunsC'
+"List functions and modules in OpenSCAD
+autocmd BufRead,BufNewFile *.scad let b:functionLister = 'ListfunsSCAD'
+autocmd BufRead,BufNewFile *.{pl,perl} let b:functionLister = 'ListfunsPerl'
+autocmd BufRead,BufNewFile *.{py} let b:functionLister = 'ListfunsPython'
+
+function! g:Showfun()
+    let x = eval( b:functionLister . '()')
+    let xs = split(x,"\n")
+    let i = 0
+    let ln = line('.')
+    while ( i < (len(xs)-1) )
+        let s = substitute(xs[i+1],'^\s*\(\d\+\).*','\1',"")
+        if s > ln
+            break
+        endif
+        let i = i + 1
+    endwhile
+    echo xs[i]
+endfunction
+
+" Call function-lister
+map <C-L>f :echo eval( b:functionLister . '()')<CR>
+
+" Show which function we are in currently
+" (or the previous one if we are outside of functions, or the first one if we
+" are before all functions)
+nmap ,wf :call Showfun()<CR>
+
 "List structures, classes and members in c
 autocmd BufRead,BufNewFile *.{h,hpp,c,cpp,cc} nmap <C-L>S :let x=system("ctags -x --c-kinds=cms --c++-kinds=cms -I" . expand("~/") . ".profane/ctags-id-list " . expand("%") . " \| awk '{$1=\"\";$2=\"\";$4=\"\";print $0}' \| sort -n") \| echo x<CR>
 "List functions in c, a bit janky but lets you search for strings
 autocmd BufRead,BufNewFile *.{h,hpp,c,cpp,cc} nmap <C-L>F :!ctags -x --c-kinds=fp --c++-kinds=fpx -I~/.profane/ctags-id-list <C-R>% \| awk '{$1="";$2="";$4="";print $0 }' \| sort -n \|less<CR>
-"List functions in Perl
-autocmd BufRead,BufNewFile *.{pl,perl} nmap <C-L>f :let x=system("ctags -x --perl-kinds=sd " . expand("%") . " \| awk '{$1=\"\";$2=\"\";$4=\"\";print $0}' \| sort -n") \| echo x<CR>
-"List functions in Python
-autocmd BufRead,BufNewFile *.{py} nmap <C-L>f :let x=system("ctags -x --python-kinds=f " . expand("%") . " \| awk '{$1=\"\";$2=\"\";$4=\"\";print $0}' \| sort -n") \| echo x<CR>
+
 autocmd BufRead,BufNewFile *.vimrc,*.{vim} nmap <C-L>f :let x=system("ctags -x --vim-kinds=fc " . expand("%") . " \| awk '{$1=\"\";$2=\"\";$4=\"\";print $0}' \| sort -n") \| echo x<CR>
+
 "List tabs
 nmap <C-L>t :tabs<CR>
 
