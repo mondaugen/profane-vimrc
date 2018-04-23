@@ -646,12 +646,18 @@ function! g:ListfunsPython()
     return x
 endfunction
 
+function! g:ListfunsJava()
+    let x=system("ctags -x --java-kinds=m " . expand("%") . " | awk '{$1=\"\";$2=\"\";$4=\"\";print $0}' | sort -n") 
+    return x
+endfunction
+
 "List functions in c
 autocmd BufRead,BufNewFile *.{h,hpp,c,cpp,cc} let b:functionLister = 'ListfunsC'
 "List functions and modules in OpenSCAD
 autocmd BufRead,BufNewFile *.scad let b:functionLister = 'ListfunsSCAD'
 autocmd BufRead,BufNewFile *.{pl,perl} let b:functionLister = 'ListfunsPerl'
 autocmd BufRead,BufNewFile *.{py} let b:functionLister = 'ListfunsPython'
+autocmd BufRead,BufNewFile *.{java} let b:functionLister = 'ListfunsJava'
 
 function! g:Showfun()
     let x = eval( b:functionLister . '()')
@@ -683,6 +689,7 @@ autocmd BufRead,BufNewFile *.{h,hpp,c,cpp,cc} nmap <C-L>S :let x=system("ctags -
 autocmd BufRead,BufNewFile *.{h,hpp,c,cpp,cc} nmap <C-L>F :!ctags -x --c-kinds=fp --c++-kinds=fpx -I~/.profane/ctags-id-list <C-R>% \| awk '{$1="";$2="";$4="";print $0 }' \| sort -n \|less<CR>
 
 autocmd BufRead,BufNewFile *.vimrc,*.{vim} nmap <C-L>f :let x=system("ctags -x --vim-kinds=fc " . expand("%") . " \| awk '{$1=\"\";$2=\"\";$4=\"\";print $0}' \| sort -n") \| echo x<CR>
+
 
 "List tabs
 nmap <C-L>t :tabs<CR>
