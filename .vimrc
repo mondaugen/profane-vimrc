@@ -770,3 +770,8 @@ imap <C-_> <Esc>l
 
 nnoremap ,W /\k\+<CR>:nohlsearch<CR>
 nnoremap ,B ?\k\+<CR>:nohlsearch<CR>
+
+"Darker status line
+hi StatusLine ctermbg=darkblue
+hi StatusLineNC ctermfg=darkblue
+
