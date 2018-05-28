@@ -607,10 +607,6 @@ noremap ,, ,
 " I also never use _ so this can be mapped
 noremap _ ,
 
-" Remove increment and decrement
-map <C-A> <NOP>
-map <C-X> <NOP>
-
 " Map :marks to CTRL-M (disables calling + command)
 nnoremap <C-M> <Esc>:marks<CR>
 
