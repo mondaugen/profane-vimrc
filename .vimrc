@@ -778,3 +778,6 @@ nnoremap ,B ?\k\+<CR>:nohlsearch<CR>
 hi StatusLine ctermbg=darkblue
 hi StatusLineNC ctermfg=darkblue
 
+"Set up undo files
+se undodir=~/.vim/.undo
+se undofile
