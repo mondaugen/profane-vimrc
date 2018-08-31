@@ -638,7 +638,7 @@ function! g:ListfunsPerl()
 endfunction
 
 function! g:ListfunsPython()
-    let x=system("ctags -x --python-kinds=f " . expand("%") . " | awk '{$1=\"\";$2=\"\";$4=\"\";print $0}' | sort -n") 
+    let x=system("grep -n -e '^[[:space:]]*def' -e '^[[:space:]]*class' " . expand("%"))
     return x
 endfunction
 
