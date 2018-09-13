@@ -45,12 +45,11 @@ map ,ev :tabe $MYVIMRC<CR>
 set tags+=~/.vim/systags
 
 "quick lhs comments
-"removed many that I never use
-map ,# 0i#
-map ,/ ^i//
+nmap ,# m'^i# `'2l
+nmap ,/ m'^i// `'3l
 "map ,> :s/^/> /<CR> <Esc>:nohlsearch<CR>
-map ," 0i"
-map ,% 0i%
+nmap ," m'^i" `'2l
+nmap ,% m'^i% `'2l
 "map ,! :s/^/!/<CR> <Esc>:nohlsearch<CR>
 "map ,; :s/^/;/<CR> <Esc>:nohlsearch<CR>
 "map ,- :s/^/--/<CR> <Esc>:nohlsearch<CR>
@@ -647,6 +646,11 @@ function! g:ListfunsJava()
     return x
 endfunction
 
+function! g:ListfunsVim()
+    let x=system("grep -n -e '^[[:space:]]*function' " . expand("%"))
+    return x
+endfunction
+
 "List functions in c
 autocmd BufRead,BufNewFile *.{h,hpp,c,cpp,cc} let b:functionLister = 'ListfunsC'
 "List functions and modules in OpenSCAD
@@ -654,6 +658,7 @@ autocmd BufRead,BufNewFile *.scad let b:functionLister = 'ListfunsSCAD'
 autocmd BufRead,BufNewFile *.{pl,perl} let b:functionLister = 'ListfunsPerl'
 autocmd BufRead,BufNewFile *.{py} let b:functionLister = 'ListfunsPython'
 autocmd BufRead,BufNewFile *.{java} let b:functionLister = 'ListfunsJava'
+autocmd BufRead,BufNewFile *.{vim,vimrc}, let b:functionLister = 'ListfunsVim'
 
 function! g:Showfun()
     let x = eval( b:functionLister . '()')
@@ -684,7 +689,6 @@ autocmd BufRead,BufNewFile *.{h,hpp,c,cpp,cc} nmap <C-L>S :let x=system("ctags -
 "List functions in c, a bit janky but lets you search for strings
 autocmd BufRead,BufNewFile *.{h,hpp,c,cpp,cc} nmap <C-L>F :!ctags -x --c-kinds=fp --c++-kinds=fpx -I~/.profane/ctags-id-list <C-R>% \| awk '{$1="";$2="";$4="";print $0 }' \| sort -n \|less<CR>
 
-autocmd BufRead,BufNewFile *.vimrc,*.{vim} nmap <C-L>f :let x=system("ctags -x --vim-kinds=fc " . expand("%") . " \| awk '{$1=\"\";$2=\"\";$4=\"\";print $0}' \| sort -n") \| echo x<CR>
 
 
 "List tabs
@@ -808,3 +812,6 @@ if v:version >= 700
     autocmd BufLeave * call AutoSaveWinView()
     autocmd BufEnter * call AutoRestoreWinView()
 endif
+
+" Start search for a word (puts the cursor in the convenient place)
+nmap ,? ?\<\>ODOD
