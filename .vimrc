@@ -1,19 +1,5 @@
-
-" An example for a vimrc file.
-"
-" Maintainer:	Bram Moolenaar <Bram@vim.org>
-" Last change:	2008 Jul 02
-"
-" To use it, copy it to
-"     for Unix and OS/2:  ~/.vimrc
-"	      for Amiga:  s:.vimrc
-"  for MS-DOS and Win32:  $VIM\_vimrc
-"	    for OpenVMS:  sys$login:.vimrc
-
-" When started as "evim", evim.vim will already have done these settings.
-if v:progname =~? "evim"
-  finish
-endif
+" PROFANE VIMRC
+" Based a bit on Bram's vimrc from 2008 Jul 02
 
 " Use Vim settings, rather then Vi settings (much better!).
 " This must be first, because it changes other options as a side effect.
@@ -24,10 +10,19 @@ set noswapfile
 
 " allow backspacing over everything in insert mode
 set backspace=indent,eol,start
-"set nowrapping
-set nowrap
-"set line wrapping
+
+" TEXT FORMATTING
+" wrap lines visually at edge of window
+set wrap
+" wrap at nice characters (don't split words basically)
+set linebreak
+" gq formats to width 80
 set textwidth=80
+set wrapmargin=0
+" but only when asked (not automatically)
+" also continue comment leader when formatting comments with gq
+set formatoptions=q
+
 " number lines
 set number
 
@@ -154,12 +149,6 @@ set ruler		" show the cursor position all the time
 set showcmd		" display incomplete commands
 set incsearch		" do incremental searching
 
-" For Win32 GUI: remove 't' flag from 'guioptions': no tearoff menu entries
-" let &guioptions = substitute(&guioptions, "t", "", "g")
-
-" Don't use Ex mode, use Q for formatting
-map Q gq
-
 " CTRL-U in insert mode deletes a lot.  Use CTRL-G u to first break undo,
 " so that you can undo CTRL-U after inserting a line break.
 inoremap <C-U> <C-G>u<C-U>
@@ -179,23 +168,9 @@ endif
 " Only do this part when compiled with support for autocommands.
 if has("autocmd")
 
-  " Enable file type detection.
-  " Use the default filetype settings, so that mail gets 'tw' set to 72,
-  " 'cindent' is on in C files, etc.
-  " Also load indent files, to automatically do language-dependent indenting.
-  filetype plugin indent on
-
   " Put these in an autocmd group, so that we can delete them easily.
   augroup vimrcEx
   au!
-
-  " For all text files wrap lines based on size of window
-  autocmd FileType text setlocal textwidth=0
-  autocmd FileType text setlocal wrapmargin=0
-  autocmd FileType text setlocal wrap
-  autocmd FileType text setlocal linebreak
-  autocmd FileType text setlocal nolist
-  
 
   " When editing a file, always jump to the last known cursor position.
   " Don't do it when the position is invalid or when inside an event handler
@@ -209,11 +184,9 @@ if has("autocmd")
 
   augroup END
 
-else
-
-  set autoindent		" always set autoindenting on
-
 endif " has("autocmd")
+
+set autoindent		" always set autoindenting on
 
 " Convenient command to see the difference between the current buffer and the
 " file it was loaded from, thus the changes you made.
@@ -242,10 +215,6 @@ endfun
 map ,rn :call RNU_toggle()<CR>
 " Set font
 se guifont=Menlo\ 10
-
-" Set line breaking
-se wrap
-se lbr
 
 " Set colour scheme, budday
 colo koehler
