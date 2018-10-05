@@ -567,8 +567,9 @@ nmap ,rnwj :<C-U>call g:RemoveWordJumpCntFuncs(0)<CR>
 " I never use ~ for original purpose so unmap it
 nnoremap ~ <NOP>
 nmap <silent> ~ :<C-U>call g:GoToNthWord(v:count)<CR>
-nnoremap <silent> ,w :<C-U>call g:GoToAdjWord(v:count,1)<CR>
-nnoremap <silent> ,b :<C-U>call g:GoToAdjWord(v:count,0)<CR>
+" The original implementation of w b is useless especially if you can use f*
+nnoremap <silent> w :<C-U>call g:GoToAdjWord(v:count,1)<CR>
+nnoremap <silent> b :<C-U>call g:GoToAdjWord(v:count,0)<CR>
 
 " Optionally if you don't like the status line
 " :hi StatusLine guibg=darkblue guifg=white
