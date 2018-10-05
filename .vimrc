@@ -401,7 +401,11 @@ function! g:GetWordIndices()
     let curmch=match(line,'\<\k\+',0,mtchcnt)
 " Adjust for width of tabs
     if (curmch != -1)
-        let curmch = strdisplaywidth(line[0:curmch-1])
+        if (curmch <= 0)
+            let curmch = 0
+        else
+            let curmch = strdisplaywidth(line[0:max([curmch-1,0])])
+        endif
     endif
     while (curmch != -1)
         let idcs += [curmch]
@@ -784,3 +788,6 @@ endif
 
 " Start search for a word (puts the cursor in the convenient place)
 nmap ,? ?\<\>ODOD
+" Start grep in current file. It displays the results in a list with line
+" numbers so you can jump directly. Ignores case.
+nmap ,gr :!grep -ni  %ODOD
