@@ -792,3 +792,7 @@ nmap ,? ?\<\>ODOD
 " Start grep in current file. It displays the results in a list with line
 " numbers so you can jump directly. Ignores case.
 nmap ,gr :!grep -ni  %ODOD
+" Start grep in current file but only search up to the cursor. Useful to search
+" for the location of the last thing.
+nmap ,gl :!head -n =line('.') % \|grep -ni 
+
