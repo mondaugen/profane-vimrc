@@ -796,3 +796,6 @@ nmap ,gr :!grep -ni  %ODOD
 " for the location of the last thing.
 nmap ,gl :!head -n =line('.') % \|grep -ni 
 
+" Remove = from valid filename characters. It could exist, but I like completing
+" variables set to files in bash
+set isfname-==
