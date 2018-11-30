@@ -611,7 +611,7 @@ function! g:ListfunsPerl()
 endfunction
 
 function! g:ListfunsPython()
-    let x=system("grep -n -e '^[[:space:]]*def' -e '^[[:space:]]*class' " . expand("%"))
+    let x=system("grep -n -e '^[[:space:]]*\\<def\\>' -e '^[[:space:]]*\\<class\\>' " . expand("%"))
     return x
 endfunction
 
@@ -621,7 +621,7 @@ function! g:ListfunsJava()
 endfunction
 
 function! g:ListfunsVim()
-    let x=system("grep -n -e '^[[:space:]]*function' " . expand("%"))
+    let x=system("grep -n -e '^[[:space:]]*\\<function\\>' " . expand("%"))
     return x
 endfunction
 
@@ -799,3 +799,7 @@ nmap ,gl :!head -n =line('.') % \|grep -ni
 " Remove = from valid filename characters. It could exist, but I like completing
 " variables set to files in bash
 set isfname-==
+
+" Make prompt ready to receive a name of a new file in the same directory as the
+" file you are editing
+nmap ,nsp :e %dT/OC
