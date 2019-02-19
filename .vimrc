@@ -628,13 +628,13 @@ function! g:ListfunsVim()
 endfunction
 
 "List functions in c
-autocmd BufRead,BufNewFile *.{h,hpp,c,cpp,cc} let b:functionLister = 'ListfunsC'
+autocmd BufRead,BufNewFile *.{h,hpp,c,cpp,cc} let b:functionLister = 'g:ListfunsC'
 "List functions and modules in OpenSCAD
-autocmd BufRead,BufNewFile *.scad let b:functionLister = 'ListfunsSCAD'
-autocmd BufRead,BufNewFile *.{pl,perl} let b:functionLister = 'ListfunsPerl'
-autocmd BufRead,BufNewFile *.{py} let b:functionLister = 'ListfunsPython'
-autocmd BufRead,BufNewFile *.{java} let b:functionLister = 'ListfunsJava'
-autocmd BufRead,BufNewFile *.{vim,vimrc}, let b:functionLister = 'ListfunsVim'
+autocmd BufRead,BufNewFile *.scad let b:functionLister = 'g:ListfunsSCAD'
+autocmd BufRead,BufNewFile *.{pl,perl} let b:functionLister = 'g:ListfunsPerl'
+autocmd BufRead,BufNewFile *.{py} let b:functionLister = 'g:ListfunsPython'
+autocmd BufRead,BufNewFile *.{java} let b:functionLister = 'g:ListfunsJava'
+autocmd BufRead,BufNewFile *.{vim,vimrc} let b:functionLister = 'g:ListfunsVim'
 
 function! g:Showfun()
     let x = eval( b:functionLister . '()')
