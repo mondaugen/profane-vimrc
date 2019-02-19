@@ -596,7 +596,9 @@ nmap  <C-L>j :jumps<CR>
 nmap <C-L>s :let x=system("grep -n section " . expand("%") . " \| sort -n") \| echo x<CR>
 
 function! g:ListfunsC()
-    let x = system("ctags -x --c-kinds=fp --c++-kinds=fpx -I" . expand("~/") . ".profane/ctags-id-list " . expand("%") . " | awk '{$1=\"\";$2=\"\";$4=\"\";print $0}' | sort -n") 
+" old way
+"    let x = system("ctags -x --c-kinds=fp --c++-kinds=fpx -I" . expand("~/") . ".profane/ctags-id-list " . expand("%") . " | awk '{$1=\"\";$2=\"\";$4=\"\";print $0}' | sort -n") 
+    let x = system("grep -n '^[^ /][^(]*(' " . expand("%")) 
     return x
 endfunction
 
@@ -803,3 +805,7 @@ set isfname-==
 " Make prompt ready to receive a name of a new file in the same directory as the
 " file you are editing
 nmap ,nsp :e %dT/OC
+
+" cc that uses indent from previous line
+nnoremap cc ddko
+
