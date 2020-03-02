@@ -602,6 +602,11 @@ function! g:ListfunsC()
     return x
 endfunction
 
+function! g:ListfunsCPP()
+    let x = system("ctags -x --c-kinds=f --c++-kinds=f -I" . expand("~/") . ".profane/ctags-id-list " . expand("%") . " | awk '{$1=\"\";$2=\"\";$4=\"\";print $0}' | sort -n") 
+    return x
+endfunction
+
 function! g:ListfunsSCAD()
     let x = system("grep -n -e module -e function " . expand("%"))
     return x
@@ -628,7 +633,8 @@ function! g:ListfunsVim()
 endfunction
 
 "List functions in c
-autocmd BufRead,BufNewFile *.{h,hpp,c,cpp,cc} let b:functionLister = 'g:ListfunsC'
+autocmd BufRead,BufNewFile *.{c} let b:functionLister = 'g:ListfunsC'
+autocmd BufRead,BufNewFile *.{h,hpp,cpp,cc} let b:functionLister = 'g:ListfunsCPP'
 "List functions and modules in OpenSCAD
 autocmd BufRead,BufNewFile *.scad let b:functionLister = 'g:ListfunsSCAD'
 autocmd BufRead,BufNewFile *.{pl,perl} let b:functionLister = 'g:ListfunsPerl'
