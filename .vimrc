@@ -815,3 +815,5 @@ nmap ,nsp :e %dT/OC
 " cc that uses indent from previous line
 nnoremap cc ddko
 
+nnoremap ,pa :se pastei
+nnoremap ,npa :se nopaste
