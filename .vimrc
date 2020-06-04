@@ -632,6 +632,11 @@ function! g:ListfunsVim()
     return x
 endfunction
 
+function! g:ListfunsCSS()
+    let x=system("grep -n '^[[:graph:]].* {[[:space:]]*$' " . expand("%"))
+    return x
+endfunction
+
 "List functions in c
 autocmd BufRead,BufNewFile *.{c} let b:functionLister = 'g:ListfunsC'
 autocmd BufRead,BufNewFile *.{h,hpp,cpp,cc} let b:functionLister = 'g:ListfunsCPP'
@@ -641,6 +646,7 @@ autocmd BufRead,BufNewFile *.{pl,perl} let b:functionLister = 'g:ListfunsPerl'
 autocmd BufRead,BufNewFile *.{py} let b:functionLister = 'g:ListfunsPython'
 autocmd BufRead,BufNewFile *.{java} let b:functionLister = 'g:ListfunsJava'
 autocmd BufRead,BufNewFile *.{vim,vimrc} let b:functionLister = 'g:ListfunsVim'
+autocmd BufRead,BufNewFile *.{css} let b:functionLister = 'g:ListfunsCSS'
 
 function! g:Showfun()
     let x = eval( b:functionLister . '()')
@@ -817,3 +823,5 @@ nnoremap cc ddko
 
 nnoremap ,pa :se pastei
 nnoremap ,npa :se nopaste
+
+se virtualedit=block
