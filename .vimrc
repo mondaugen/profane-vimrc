@@ -232,9 +232,6 @@ iunmap <Tab>
 " Map CTRL-T to do readline style character swaps
 inoremap <C-T> hxpa 
 
-" Map N so that it centres the window when searching
-nnoremap n nzz
-nnoremap N Nzz
 " Map CTRL-E differently in insert mode
 " Deletes until a character is found
 inoremap <C-E> <Nop>
@@ -632,9 +629,15 @@ function! g:ListfunsVim()
     return x
 endfunction
 
+function! g:ListclassesCPP()
+    let x = system("grep -n '^[[:space:]]*class' " . expand("%"))
+    return x
+endfunction
+
 "List functions in c
 autocmd BufRead,BufNewFile *.{c} let b:functionLister = 'g:ListfunsC'
 autocmd BufRead,BufNewFile *.{h,hpp,cpp,cc} let b:functionLister = 'g:ListfunsCPP'
+autocmd BufRead,BufNewFile *.{h,hpp,cpp,cc} let b:classLister = 'g:ListclassesCPP'
 "List functions and modules in OpenSCAD
 autocmd BufRead,BufNewFile *.scad let b:functionLister = 'g:ListfunsSCAD'
 autocmd BufRead,BufNewFile *.{pl,perl} let b:functionLister = 'g:ListfunsPerl'
@@ -659,6 +662,9 @@ endfunction
 
 " Call function-lister
 map <C-L>f :echo eval( b:functionLister . '()')<CR>
+
+" Call class-lister
+map <C-L>c :echo eval( b:classLister . '()')<CR>
 
 " Show which function we are in currently
 " (or the previous one if we are outside of functions, or the first one if we
@@ -815,3 +821,10 @@ nmap ,nsp :e %dT/OC
 " cc that uses indent from previous line
 nnoremap cc ddko
 
+" setup omnicompletion, no preview window
+filetype plugin on
+set omnifunc=syntaxcomplete#Complete
+se completeopt-=preview
+
+" refresh tags
+nmap ,rt :call system('ctags -R -h ".h.H.hh.hpp.hxx.h++.inc.def.c.cc.cpp"')<CR>
