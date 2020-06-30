@@ -825,3 +825,10 @@ nnoremap ,pa :se pastei
 nnoremap ,npa :se nopaste
 
 se virtualedit=block
+
+" after you've visually selected something (highlight), search for that text as
+" a word (I never use S)
+vmap S "sy/\<s\>
+
+" add - as a keyword character
+se iskeyword+=-
