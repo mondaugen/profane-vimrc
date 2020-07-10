@@ -639,6 +639,11 @@ function! g:ListfunsCSS()
     return x
 endfunction
 
+function! g:ListfunsJS()
+    let x=system("grep -n -e '\\<function\\>' " . expand("%"))
+    return x
+endfunction
+
 "List functions in c
 autocmd BufRead,BufNewFile *.{c} let b:functionLister = 'g:ListfunsC'
 autocmd BufRead,BufNewFile *.{h,hpp,cpp,cc} let b:functionLister = 'g:ListfunsCPP'
@@ -650,6 +655,7 @@ autocmd BufRead,BufNewFile *.{py} let b:functionLister = 'g:ListfunsPython'
 autocmd BufRead,BufNewFile *.{java} let b:functionLister = 'g:ListfunsJava'
 autocmd BufRead,BufNewFile *.{vim,vimrc} let b:functionLister = 'g:ListfunsVim'
 autocmd BufRead,BufNewFile *.{css} let b:functionLister = 'g:ListfunsCSS'
+autocmd BufRead,BufNewFile *.{js,html} let b:functionLister = 'g:ListfunsJS'
 
 function! g:Showfun()
     let x = eval( b:functionLister . '()')
