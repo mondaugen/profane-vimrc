@@ -851,3 +851,6 @@ vmap S "sy/\<s\>
 
 " add - as a keyword character
 se iskeyword+=-
+
+" remove trailing whitespace on save
+autocmd BufWritePre * :%s/\s\+$//e
