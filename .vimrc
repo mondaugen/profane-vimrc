@@ -74,19 +74,19 @@ map ,sp <Esc>:setlocal spell spelllang=en_us<CR>
 " to. type it in and your function prototype will be appended
 nmap ,hfp :.,/{/-1w>>
 " quick #define
-nmap ,df 0i#define 
+nmap ,df 0i#define
 " quick #include
-nmap ,in 0i#include 
+nmap ,in 0i#include
 " quick #ifdef
-nmap ,ifd 0i#ifdef 
+nmap ,ifd 0i#ifdef
 " quick #ifndef
-nmap ,ifn 0i#ifndef 
+nmap ,ifn 0i#ifndef
 " quick #undef
-nmap ,ud 0i#undef 
+nmap ,ud 0i#undef
 " quick #else
-nmap ,el 0i#else 
+nmap ,el 0i#else
 " quick #endif
-nmap ,ef 0i#endif 
+nmap ,ef 0i#endif
 
 " automatic header gates when opening file
 function! s:Insert_gates()
@@ -230,7 +230,7 @@ inoremap <C-I> <C-T>
 " Unmap or else it will indent whole line
 iunmap <Tab>
 " Map CTRL-T to do readline style character swaps
-inoremap <C-T> hxpa 
+inoremap <C-T> hxpa
 
 " Map CTRL-E differently in insert mode
 " Deletes until a character is found
@@ -486,7 +486,7 @@ function! g:GoToAdjWord(arg,dir)
         endif
     endif
     execute "normal " . (mc + 1) . "|"
-endfunction        
+endfunction
 
 function! g:ShowWords(cols)
     let idcs=g:GetWordIndices()
@@ -523,7 +523,7 @@ function! g:ShowWords(cols)
     if (a:cols != 0)
         let ccols=''
         let l = len(idcs) - 1
-        while (l >= 0) 
+        while (l >= 0)
             let ccols=ccols . printf("%d",idcs[l] + 1) . ','
             let l = l - 1
         endwhile
@@ -586,7 +586,7 @@ se hidden
 "List buffers
 nmap  <C-L>b :buffers<CR>
 "List changes
-nmap  <C-L>c :changes<CR> 
+nmap  <C-L>c :changes<CR>
 "List jumps
 nmap  <C-L>j :jumps<CR>
 "List sections (useful for latex files)
@@ -594,13 +594,13 @@ nmap <C-L>s :let x=system("grep -n section " . expand("%") . " \| sort -n") \| e
 
 function! g:ListfunsC()
 " old way
-"    let x = system("ctags -x --c-kinds=fp --c++-kinds=fpx -I" . expand("~/") . ".profane/ctags-id-list " . expand("%") . " | awk '{$1=\"\";$2=\"\";$4=\"\";print $0}' | sort -n") 
-    let x = system("grep -n '^[^ /][^(]*(' " . expand("%")) 
+"    let x = system("ctags -x --c-kinds=fp --c++-kinds=fpx -I" . expand("~/") . ".profane/ctags-id-list " . expand("%") . " | awk '{$1=\"\";$2=\"\";$4=\"\";print $0}' | sort -n")
+    let x = system("grep -n '^[^ /][^(]*(' " . expand("%"))
     return x
 endfunction
 
 function! g:ListfunsCPP()
-    let x = system("ctags -x --c-kinds=f --c++-kinds=f -I" . expand("~/") . ".profane/ctags-id-list " . expand("%") . " | awk '{$1=\"\";$2=\"\";$4=\"\";print $0}' | sort -n") 
+    let x = system("ctags -x --c-kinds=f --c++-kinds=f -I" . expand("~/") . ".profane/ctags-id-list " . expand("%") . " | awk '{$1=\"\";$2=\"\";$4=\"\";print $0}' | sort -n")
     return x
 endfunction
 
@@ -610,7 +610,7 @@ function! g:ListfunsSCAD()
 endfunction
 
 function! g:ListfunsPerl()
-    let x=system("ctags -x --perl-kinds=sd " . expand("%") . " | awk '{$1=\"\";$2=\"\";$4=\"\";print $0}' | sort -n") 
+    let x=system("ctags -x --perl-kinds=sd " . expand("%") . " | awk '{$1=\"\";$2=\"\";$4=\"\";print $0}' | sort -n")
     return x
 endfunction
 
@@ -620,7 +620,7 @@ function! g:ListfunsPython()
 endfunction
 
 function! g:ListfunsJava()
-    let x=system("ctags -x --java-kinds=m " . expand("%") . " | awk '{$1=\"\";$2=\"\";$4=\"\";print $0}' | sort -n") 
+    let x=system("ctags -x --java-kinds=m " . expand("%") . " | awk '{$1=\"\";$2=\"\";$4=\"\";print $0}' | sort -n")
     return x
 endfunction
 
@@ -723,7 +723,7 @@ nmap ,cpb :let @+=expand("%:t") . ":" . line(".")<CR>
 nmap ,cpF :let @+=@%<CR>
 
 " No inner stars on C-style-comments
-autocmd BufRead,BufNewFile *.{h,hpp,c,cpp,cc} se comments=://,b:#,:%,:XCOMM,n:>,fb:- 
+autocmd BufRead,BufNewFile *.{h,hpp,c,cpp,cc} se comments=://,b:#,:%,:XCOMM,n:>,fb:-
 
 " Insert C-style comment
 nmap ,cc i/*  */<Esc>2hi
@@ -820,7 +820,7 @@ nmap ,? ?\<\>ODOD
 nmap ,gr :!grep -ni  %ODOD
 " Start grep in current file but only search up to the cursor. Useful to search
 " for the location of the last thing.
-nmap ,gl :!head -n =line('.') % \|grep -ni 
+nmap ,gl :!head -n =line('.') % \|grep -ni
 
 " Remove = from valid filename characters. It could exist, but I like completing
 " variables set to files in bash
@@ -854,3 +854,6 @@ se iskeyword+=-
 
 " remove trailing whitespace on save
 autocmd BufWritePre * :%s/\s\+$//e
+
+"List variable declarations in JavaScript
+autocmd BufRead,BufNewFile *.{js,html} nmap <C-L>v :let x=system("grep -n '\\<var\\>' " . expand("%")) \| echo x<CR>
