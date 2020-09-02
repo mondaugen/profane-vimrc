@@ -840,7 +840,7 @@ se completeopt-=preview
 
 " refresh tags
 nmap ,rt :call system('ctags -R -h ".h.H.hh.hpp.hxx.h++.inc.def.c.cc.cpp"')<CR>
-nnoremap ,pa :se pastei
+nnoremap ,pa :se paste
 nnoremap ,npa :se nopaste
 
 se virtualedit=block
