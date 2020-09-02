@@ -857,3 +857,15 @@ autocmd BufWritePre * :%s/\s\+$//e
 
 "List variable declarations in JavaScript
 autocmd BufRead,BufNewFile *.{js,html} nmap <C-L>v :let x=system("grep -n '\\<var\\>' " . expand("%")) \| echo x<CR>
+
+"Read file path under cursor relative to path to current file edited
+nmap ,gf :e %dT/a
+"Same as above but lets you edit the path first
+nmap ,GF :e %dT/a
+"In JavaScript adds .js for you so it is compatible with require statement
+"If you don't want .js added, just use ,GF and then press <Enter>
+autocmd BufRead,BufNewFile *.{js,html} nmap ,gf :e %dT/a.js
+
+"Yank a visual selection to the system clipboard with xclip
+"NOTE copies into z register
+vmap ,cb "zy:call system("xclip -sel clip",getreg('z',1,1))
