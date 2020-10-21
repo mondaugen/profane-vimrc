@@ -853,7 +853,9 @@ vmap S "sy/\<s\>
 se iskeyword+=-
 
 " remove trailing whitespace on save
-autocmd BufWritePre * :%s/\s\+$//e
+" NOTE: Removed this because some projects don't like it and this should be more
+" of a git-hook thing.
+" autocmd BufWritePre * :%s/\s\+$//e
 
 "List variable declarations in JavaScript
 autocmd BufRead,BufNewFile *.{js,html} nmap <C-L>v :let x=system("grep -n '\\<var\\>' " . expand("%")) \| echo x<CR>
