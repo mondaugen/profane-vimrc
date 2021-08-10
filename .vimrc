@@ -871,3 +871,6 @@ autocmd BufRead,BufNewFile *.{js,html} nmap ,gf :e %dT/a.js
 "Yank a visual selection to the system clipboard with xclip
 "NOTE copies into z register
 vmap ,cb "zy:call system("xclip -sel clip",getreg('z',1,1))
+
+"Insert the path of the current file in insert and command line mode
+map!  =expand('%:h').'/'<CR>
