@@ -874,3 +874,31 @@ vmap ,cb "zy:call system("xclip -sel clip",getreg('z',1,1))
 
 "Insert the path of the current file in insert and command line mode
 map!  =expand('%:h').'/'<CR>
+
+" U up, undo can only be called via <Esc>:u<Return>
+nnoremap u <C-u>
+
+" Complete file name looking anywhere in file path
+" Filters out paths by ignoring paths described by the active .gitignore (see
+" git check-ignore)
+fun! CompleteAnywhereInPath(findstart, base)
+  if a:findstart
+    " locate the start of the word
+    let line = getline('.')
+    let start = col('.') - 1
+    while start > 0 && line[start - 1] =~ '\S'
+      let start -= 1
+    endwhile
+    return start
+  else
+    " find paths matching with "a:base"
+    let paths = system('find . -type f -regex ".*'.a:base.'.*" -print0 | xargs -0 -I{} sh -c '."'".'git check-ignore -q "{}" || echo "{}"'."'")
+    let res = split(paths,'\n')
+    return res
+  endif
+endfun
+set completefunc=CompleteAnywhereInPath
+" Typeing CTRL-X CTRL-F on the command line opens this completer (but in the
+" command line buffer editor)
+cmap  i
+
