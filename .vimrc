@@ -892,7 +892,7 @@ fun! CompleteAnywhereInPath(findstart, base)
     return start
   else
     " find paths matching with "a:base"
-    let paths = system('find . -type f -regex ".*'.a:base.'.*" -print0 | xargs -0 -I{} sh -c '."'".'git check-ignore -q "{}" || echo "{}"'."'")
+    let paths = system("find . -regex '.*".a:base.".*' -type f | git check-ignore -v -n --stdin|grep '^::'| perl -pe 's/::\\s+//'")
     let res = split(paths,'\n')
     return res
   endif
