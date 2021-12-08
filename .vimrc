@@ -902,3 +902,23 @@ set completefunc=CompleteAnywhereInPath
 " command line buffer editor)
 cmap  i
 
+" Kind of jank but lets you complete from the list of open buffers
+fun! GetBufferPaths()
+    redir => lsoutput
+    silent execute "ls"
+    redir END
+    let paths = split(lsoutput,"\n")
+    call map(paths,'substitute(v:val,"^[^\"]*\"","","g")')
+    call map(paths,'substitute(v:val,"\"[^\"]*$","","g")')
+    call filter(paths,'v:val !~ "\\[Command Line\\]"')
+    return paths
+endfun
+
+fun! ListOpenBuffers()
+    let paths = GetBufferPaths()
+    call complete(col("."),paths)
+    return ''
+endfun
+
+inoremap  =ListOpenBuffers()
+cnoremap  i=ListOpenBuffers()
