@@ -922,3 +922,6 @@ endfun
 
 inoremap  =ListOpenBuffers()
 cnoremap  i=ListOpenBuffers()
+
+nmap ,g* :!git grep -I -n -r 
+
