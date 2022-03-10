@@ -923,5 +923,5 @@ endfun
 inoremap  =ListOpenBuffers()
 cnoremap  i=ListOpenBuffers()
 
-nmap ,g* :!git grep -I -n -r 
+nmap ,g* :!git grep --recurse-submodules -I -n -r 
 
