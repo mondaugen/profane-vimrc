@@ -925,6 +925,7 @@ cnoremap  i=ListOpenBuffers()
 
 nmap ,g* :!bash ~/.sancho/git_grep_vim_jump.sh 
 nmap ,gd :!bash ~/.sancho/git_grep_vim_jump.sh define\ 
+nmap ,g: :!bash ~/.sancho/git_grep_vim_jump.sh
 
 
 
