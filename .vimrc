@@ -593,9 +593,7 @@ nmap  <C-L>j :jumps<CR>
 nmap <C-L>s :let x=system("grep -n section " . expand("%") . " \| sort -n") \| echo x<CR>
 
 function! g:ListfunsC()
-" old way
-"    let x = system("ctags -x --c-kinds=fp --c++-kinds=fpx -I" . expand("~/") . ".profane/ctags-id-list " . expand("%") . " | awk '{$1=\"\";$2=\"\";$4=\"\";print $0}' | sort -n")
-    let x = system("grep -n '^[^ /][^(]*(' " . expand("%"))
+    let x = system("ctags -x -f- " . expand("%") . " |grep '\\<function\\>'|awk '{print $3 \"\t\" $1}'|sort -n")
     return x
 endfunction
 
