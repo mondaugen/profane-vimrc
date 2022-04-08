@@ -847,9 +847,6 @@ se virtualedit=block
 " a word (I never use S)
 vmap S "sy/\<s\>
 
-" add - as a keyword character
-se iskeyword+=-
-
 " remove trailing whitespace on save
 " NOTE: Removed this because some projects don't like it and this should be more
 " of a git-hook thing.
@@ -924,6 +921,7 @@ cnoremap  i=ListOpenBuffers()
 nmap ,g* :!bash ~/.sancho/git_grep_vim_jump.sh 
 nmap ,gd :!bash ~/.sancho/git_grep_vim_jump.sh define\ 
 nmap ,g: :!bash ~/.sancho/git_grep_vim_jump.sh
+nmap ,g? :!git grep --recurse-submodules -I -n -r 
 
 
 
