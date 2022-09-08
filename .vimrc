@@ -597,6 +597,11 @@ function! g:ListfunsC()
     return x
 endfunction
 
+function! g:ListfunsH()
+    let x = system("ctags -x --language-force=c --c-kinds=p -f- " . expand("%") . " |grep '\\<prototype\\>'|awk '{print $3 \"\t\" $1}'|sort -n")
+    return x
+endfunction
+
 function! g:ListfunsCPP()
     let x = system("ctags -x --c-kinds=f --c++-kinds=f -I" . expand("~/") . ".profane/ctags-id-list " . expand("%") . " | awk '{$1=\"\";$2=\"\";$4=\"\";print $0}' | sort -n")
     return x
@@ -632,6 +637,11 @@ function! g:ListclassesCPP()
     return x
 endfunction
 
+function! g:ListstructsC()
+    let x = system("ctags -x --c-kinds=st " . expand("%") . " |awk '{print $3 \"\t\" $1}'|sort -n")
+    return x
+endfunction
+
 function! g:ListfunsCSS()
     let x=system("grep -n '^[[:graph:]].* {[[:space:]]*$' " . expand("%"))
     return x
@@ -644,8 +654,10 @@ endfunction
 
 "List functions in c
 autocmd BufRead,BufNewFile *.{c} let b:functionLister = 'g:ListfunsC'
-autocmd BufRead,BufNewFile *.{h,hpp,cpp,cc} let b:functionLister = 'g:ListfunsCPP'
-autocmd BufRead,BufNewFile *.{h,hpp,cpp,cc} let b:classLister = 'g:ListclassesCPP'
+autocmd BufRead,BufNewFile *.{h} let b:functionLister = 'g:ListfunsH'
+autocmd BufRead,BufNewFile *.{hh,hpp,cpp,cc} let b:functionLister = 'g:ListfunsCPP'
+autocmd BufRead,BufNewFile *.{hh,hpp,cpp,cc} let b:classLister = 'g:ListclassesCPP'
+autocmd BufRead,BufNewFile *.{h,c} let b:classLister = 'g:ListstructsC'
 "List functions and modules in OpenSCAD
 autocmd BufRead,BufNewFile *.scad let b:functionLister = 'g:ListfunsSCAD'
 autocmd BufRead,BufNewFile *.{pl,perl} let b:functionLister = 'g:ListfunsPerl'
@@ -923,5 +935,18 @@ nmap ,gd :!bash ~/.sancho/git_grep_vim_jump.sh define\ 
 nmap ,g: :!bash ~/.sancho/git_grep_vim_jump.sh
 nmap ,g? :!git grep --recurse-submodules -I -n -r 
 
+" Opens file and jumps to line
+function g:OpenFileJumpCursor(arg)
+    let parts = split(a:arg,':')
+    if len(parts) >= 1
+        execute 'e ' . parts[0]
+    endif
+    if len(parts) >= 2
+        execute parts[1]
+    endif
+    if len(parts) >= 3
+        execute 'normal ' . parts[2] . '|'
+    endif
+endfunction
 
-
+nmap ,> :call OpenFileJumpCursor(system('tmux show-buffer'))<CR>
