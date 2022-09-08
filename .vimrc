@@ -941,10 +941,10 @@ function g:OpenFileJumpCursor(arg)
     if len(parts) >= 1
         execute 'e ' . parts[0]
     endif
-    if len(parts) >= 2
+    if len(parts) >= 2 && parts[1] =~ '^[0-9]\+$'
         execute parts[1]
     endif
-    if len(parts) >= 3
+    if len(parts) >= 3 && parts[2] =~ '^[0-9]\+$'
         execute 'normal ' . parts[2] . '|'
     endif
 endfunction
