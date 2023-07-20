@@ -952,3 +952,5 @@ function g:OpenFileJumpCursor(arg)
 endfunction
 
 nmap ,> :call OpenFileJumpCursor(system('tmux show-buffer'))<CR>
+" Number incrementing is the dumbest feature
+map <C-a> <nop>
