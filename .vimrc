@@ -954,3 +954,19 @@ endfunction
 nmap ,> :call OpenFileJumpCursor(system('tmux show-buffer'))<CR>
 " Number incrementing is the dumbest feature
 map <C-a> <nop>
+
+" c_s   : screen column
+" l_s   : screen line
+" c_s_p : screen column destination
+" l_s_p : screen line destination
+" c_t   : text file column
+" l_t   : text file line
+function! g:MovTextAbs(c_s, l_s, c_s_p, l_s_p)
+    let d_c_s = a:c_s_p - a:c_s
+    let d_l_s = a:l_s_p - a:l_s
+    let l_t   = line('.')
+    let c_t   = col('.')
+    let c_t_p = c_t + d_c_s
+    let l_t_p = l_t + d_l_s
+    call cursor(l_t_p,c_t_p)
+endfunction
