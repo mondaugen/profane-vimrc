@@ -970,3 +970,6 @@ function! g:MovTextAbs(c_s, l_s, c_s_p, l_s_p)
     let l_t_p = l_t + d_l_s
     call cursor(l_t_p,c_t_p)
 endfunction
+
+nmap ,ff :1,$!clang-format
+    \ -style="{BasedOnStyle: Mozilla, IndentWidth: 4, AlignAfterOpenBracket: true}"<CR>
