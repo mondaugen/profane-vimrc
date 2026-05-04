@@ -941,7 +941,8 @@ nmap ,g? :!git grep --recurse-submodules -I -n -r 
 function g:OpenFileJumpCursor(arg)
     let parts = split(a:arg,':')
     if len(parts) >= 1
-        execute 'e ' . parts[0]
+        let fullpaths = systemlist('find -name "' . parts[0] . '"')
+        execute 'e ' . fullpaths[0]
     endif
     if len(parts) >= 2 && parts[1] =~ '^[0-9]\+$'
         execute parts[1]
