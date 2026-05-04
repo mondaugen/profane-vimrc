@@ -937,13 +937,15 @@ nmap ,gd :!bash ~/.sancho/git_grep_vim_jump.sh define\ 
 nmap ,g: :!bash ~/.sancho/git_grep_vim_jump.sh
 nmap ,g? :!git grep --recurse-submodules -I -n -r 
 
-" Opens file and jumps to line
-function g:OpenFileJumpCursor(arg)
+" Opens file by expanding basename using find and jumps to line
+function g:OpenFindFileJumpCursor(arg)
     let parts = split(a:arg,':')
     if len(parts) >= 1
         let basenamepart = systemlist("basename " . parts[0])[0]
         let findcmd = 'find -name "' . basenamepart . '"'
         let fullpaths = systemlist(findcmd)
+        " TODO: have tmux display a menu where we can choose the fullpath we
+        " want, right now it just chooses the first path shown
         execute 'e ' . fullpaths[0]
     endif
     if len(parts) >= 2 && parts[1] =~ '^[0-9]\+$'
@@ -954,6 +956,21 @@ function g:OpenFileJumpCursor(arg)
     endif
 endfunction
 
+" Opens file exactly as provided and jumps to line
+function g:OpenFileJumpCursor(arg)
+    let parts = split(a:arg,':')
+    if len(parts) >= 1
+        execute 'e ' . parts[0]
+    endif
+    if len(parts) >= 2 && parts[1] =~ '^[0-9]\+$'
+        execute parts[1]
+    endif
+    if len(parts) >= 3 && parts[2] =~ '^[0-9]\+$'
+        execute 'normal ' . parts[2] . '|'
+    endif
+endfunction
+
+nmap ,] :call OpenFindFileJumpCursor(system('tmux show-buffer'))<CR>
 nmap ,> :call OpenFileJumpCursor(system('tmux show-buffer'))<CR>
 " Number incrementing is the dumbest feature
 map <C-a> <nop>
