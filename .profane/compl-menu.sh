@@ -1,4 +1,5 @@
-# create a completion menu from items piped in
+# create a completion menu from items read in from file that is first program
+# argument
 pyprog='
 import sys
 
@@ -19,6 +20,7 @@ for line,letter in zip(sys.stdin.readlines(),letters):
 if int(sys.argv[1])>0:
     print("esac")
 '
+# read the options in here
 options=$(cat $1)
 # add some "random" garbage to avoid collisions, we don't care about secrecy
 OUTFILE=/tmp/walk-on-by-HeTjJaBdsP
