@@ -944,9 +944,15 @@ function g:OpenFindFileJumpCursor(arg)
         let basenamepart = systemlist("basename " . parts[0])[0]
         let findcmd = 'find -name "' . basenamepart . '"'
         let fullpaths = systemlist(findcmd)
-        " TODO: have tmux display a menu where we can choose the fullpath we
-        " want, right now it just chooses the first path shown
-        execute 'e ' . fullpaths[0]
+        if len(fullpaths) > 1
+            " only do the song-and-dance if there is more than one file to
+            " choose from
+            execute "silent !bash" shellescape($HOME . "/.profane/compl-menu.sh",1) '<(find -name "' .. basenamepart .. '")'
+            let chospaths=systemlist('cat /tmp/walk-on-by-HeTjJaBdsP')
+            execute 'e ' . chospaths[0]
+        else
+            execute 'e '. fullpaths[0]
+        endif
     endif
     if len(parts) >= 2 && parts[1] =~ '^[0-9]\+$'
         execute parts[1]
