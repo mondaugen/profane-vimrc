@@ -217,7 +217,8 @@ map ,rn :call RNU_toggle()<CR>
 se guifont=Menlo\ 10
 
 " Set colour scheme, budday
-colo koehler
+colorscheme koehler
+set background=dark
 
 " Map CTRL-S to :w
 nmap  :w
@@ -789,8 +790,9 @@ nnoremap ,W /\k\+<CR>:nohlsearch<CR>
 nnoremap ,B ?\k\+<CR>:nohlsearch<CR>
 
 "Darker status line
-hi StatusLine ctermbg=darkblue
-hi StatusLineNC ctermfg=darkblue
+hi StatusLine ctermbg=darkgrey
+hi StatusLineNC ctermfg=black
+hi StatusLineNC ctermbg=grey
 
 "Set up undo files
 se undodir=~/.vim/.undo
