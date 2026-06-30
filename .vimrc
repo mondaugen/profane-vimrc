@@ -962,6 +962,7 @@ function g:OpenFindFileJumpCursor(arg)
     if len(parts) >= 3 && parts[2] =~ '^[0-9]\+$'
         execute 'normal ' . parts[2] . '|'
     endif
+    redraw!
 endfunction
 
 " Opens file exactly as provided and jumps to line
