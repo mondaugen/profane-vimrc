@@ -943,13 +943,13 @@ nmap ,g? :!git grep --recurse-submodules -I -n -r 
 function g:OpenFindFileJumpCursor(arg)
     let parts = split(a:arg,':')
     if len(parts) >= 1
-        let basenamepart = systemlist("basename " . parts[0])[0]
-        let findcmd = 'find -name "' . basenamepart . '"'
+        let basenamepart = split(parts[0],'[.]/')[-1]
+        let findcmd = 'find -path "*' . basenamepart . '"'
         let fullpaths = systemlist(findcmd)
         if len(fullpaths) > 1
             " only do the song-and-dance if there is more than one file to
             " choose from
-            execute "silent !bash" shellescape($HOME . "/.profane/compl-menu.sh",1) '<(find -name "' .. basenamepart .. '")'
+            execute "silent !bash" shellescape($HOME . "/.profane/compl-menu.sh",1) '<(find -path "*' .. basenamepart .. '")'
             let chospaths=systemlist('cat /tmp/walk-on-by-HeTjJaBdsP')
             execute 'e ' . chospaths[0]
         else
